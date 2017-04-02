@@ -5,6 +5,7 @@
 - show version can install: `$ pyenv install --list`
 - install a version: `$ pyenv install 3.6.1`
 - show all installed version: `$ pyenv versions`
+- show current use version: `$ pyenv version`
 - change local path python version: `$ pyenv local 3.6.1`
 
 ## Use Virtual Environment
