@@ -9,6 +9,10 @@ class TxdcwYcSpider(scrapy.Spider):
     name = "txdcw_yc"
     allowed_domains = ["hb.qq.com"]
     start_urls = ['http://hb.qq.com/l/yc/list20130619124315.htm']
+    custom_settings = {
+        'CONCURRENT_ITEMS': 1,
+        'CONCURRENT_REQUESTS': 1,
+    }
 
     def parse(self, response):
         for listItem in response.css('.newslist li'):
