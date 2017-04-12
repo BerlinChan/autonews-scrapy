@@ -5,8 +5,11 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-import scrapy
+import pymongo
+from bson.objectid import ObjectId
+from requests import request
 import json
+from datetime import datetime
 from auto_news.items import NewsDetailItem, NewsListItem
 
 
@@ -28,8 +31,8 @@ class SocketOnNewsAdded(object):
         )
 
     def process_item(self, item, spider):
-        scrapy.Request('http://localhost:3090/', method='POST', body=json.dumps(item))
-        print('on news item added', item)
+        # 发送到websocket服务
+        request('POST', self.http_server + 'listItem_added', data=json.dumps(item))
         return item
 
     def storeList(item, spider):
@@ -37,3 +40,31 @@ class SocketOnNewsAdded(object):
 
     def storeDetail(item, spider):
         pass  # make some things with Body item here
+
+
+class InsertListItemPipeline(object):
+    collection_name = 'list'
+
+    def __init__(self, mongo_uri, mongo_db):
+        self.mongo_uri = mongo_uri
+        self.mongo_db = mongo_db
+
+    @classmethod
+    def from_crawler(cls, crawler): return cls(
+        mongo_uri=crawler.settings.get('MONGO_URI'),
+        mongo_db=crawler.settings.get('MONGO_DATABASE')
+    )
+
+    def open_spider(self, spider):
+        self.client = pymongo.MongoClient(self.mongo_uri)
+        self.db = self.client[self.mongo_db]
+
+    def close_spider(self, spider):
+        self.client.close()
+
+    def process_item(self, item, spider):
+        tempItem = item
+        tempItem['_id'] = ObjectId(item.get('_id'))
+        tempItem['date'] = datetime.fromtimestamp(item.get('date'))
+        self.db[self.collection_name].insert(tempItem)
+        return item

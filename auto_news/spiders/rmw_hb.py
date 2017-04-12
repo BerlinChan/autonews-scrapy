@@ -5,6 +5,9 @@ from scrapy.spiders import Rule
 from scrapy.linkextractors import LinkExtractor
 from scrapy.loader import ItemLoader
 from auto_news.items import NewsListItem, NewsDetailItem
+from bson.objectid import ObjectId
+from bson import json_util
+import arrow
 
 
 class RmwHbSpider(scrapy.Spider):
@@ -18,17 +21,20 @@ class RmwHbSpider(scrapy.Spider):
     custom_settings = {
         'ITEM_PIPELINES': {
             'auto_news.pipelines.SocketOnNewsAdded': 300,
+            'auto_news.pipelines.InsertListItemPipeline': 400,
         }
     }
 
     def parse(self, response):
         for listItem in response.css('.d2_2 li'):
             yield {
-                '_id': '_id',
+                '_id': str(ObjectId()),
                 'origin_key': 'rmw_hb',
-                'url': listItem.css('a::attr(href)').extract_first(),
+                'origin_name': '人民网-湖北频道',
+                'url': response.urljoin(listItem.css('a::attr(href)').extract_first()),
                 'title': listItem.css('a::text').extract_first(),
-                'date': listItem.css('i::text').extract_first(),
+                'date': arrow.get(listItem.css('i::text').extract_first()[2:-2] + ' +08:00',
+                                  'YYYY年MM月DD日 HH:mm ZZ').timestamp,
             }
 
         # next page
