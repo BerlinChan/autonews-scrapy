@@ -4,7 +4,7 @@ import scrapy
 from scrapy.spiders import Rule
 from scrapy.linkextractors import LinkExtractor
 from scrapy.loader import ItemLoader
-from auto_news.auto_news.items import NewsListItem, NewsDetailItem
+from auto_news.items import NewsListItem, NewsDetailItem
 
 
 class RmwHbSpider(scrapy.Spider):
@@ -15,10 +15,14 @@ class RmwHbSpider(scrapy.Spider):
         # Rule(LinkExtractor(allow=("/subject/\d+$")), callback='parse_list'),
         # Rule(LinkExtractor(allow=("/tag/[^/]+$",)), follow=True),
     ]
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'auto_news.pipelines.SocketOnNewsAdded': 300,
+        }
+    }
 
     def parse(self, response):
         for listItem in response.css('.d2_2 li'):
-            print(listItem.css('a::text').extract_first())
             yield {
                 '_id': '_id',
                 'origin_key': 'rmw_hb',
