@@ -20,6 +20,7 @@ class RmwHbSpider(scrapy.Spider):
     ]
     custom_settings = {
         'ITEM_PIPELINES': {
+            'auto_news.pipelines.RemoveDuplicatePipeline': 200,
             'auto_news.pipelines.SocketOnNewsAdded': 300,
             'auto_news.pipelines.InsertListItemPipeline': 400,
         }
