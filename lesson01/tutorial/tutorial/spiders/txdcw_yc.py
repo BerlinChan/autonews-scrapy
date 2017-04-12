@@ -20,4 +20,4 @@ class TxdcwYcSpider(scrapy.Spider):
 
         next_page = response.css('.newslist+ .pageNav a+ .f12::attr(href)').extract_first()
         if next_page is not None:
-            yield scrapy.Request(next_page, self.parse)
+            yield scrapy.Request(next_page, callback=self.parse)
