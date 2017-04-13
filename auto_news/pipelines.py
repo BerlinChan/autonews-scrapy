@@ -94,6 +94,7 @@ class InsertListItemPipeline(object):
     def process_item(self, item, spider):
         tempItem = item
         tempItem['_id'] = ObjectId(item.get('_id'))
-        tempItem['date'] = datetime.fromtimestamp(item.get('date'))
+        tempItem['date'] = datetime.strptime(item.get('date'), '%Y-%m-%dT%H:%M:%S.%f')
+        print(22, tempItem.get('date'))
         self.db[self.collection_name].insert(tempItem)
         return item

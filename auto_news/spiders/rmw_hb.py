@@ -35,7 +35,7 @@ class RmwHbSpider(scrapy.Spider):
                 'url': response.urljoin(listItem.css('a::attr(href)').extract_first()),
                 'title': listItem.css('a::text').extract_first(),
                 'date': arrow.get(listItem.css('i::text').extract_first()[2:-2] + ' +08:00',
-                                  'YYYY年MM月DD日 HH:mm ZZ').timestamp,
+                                  'YYYY年MM月DD日 HH:mm ZZ').isoformat(),
             }
 
         # next page
