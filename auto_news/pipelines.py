@@ -52,8 +52,8 @@ class SocketOnNewsAdded(object):
         )
 
     def process_item(self, item, spider):
-        print(item['origin_name'] + ': ' + item['title'])
         if isinstance(item, NewsListItem):
+            print(item['origin_name'] + ': ' + item['title'])
             # 发送到websocket服务
             request('POST', self.http_server + 'listItem_added', data=json.dumps(dict(item)))
         return item
