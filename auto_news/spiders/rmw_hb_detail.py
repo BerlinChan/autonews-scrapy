@@ -17,7 +17,7 @@ class RmwHbDetailSpider(CrawlSpider):
     ]
     rules = [
         Rule(LinkExtractor(allow='/n2/\d{4}/\d{4}/c', restrict_css='.d2_2 li'),
-             callback='parse_detail_item', process_links='process_list_links'),
+             callback='parse_detail_item'),
         Rule(LinkExtractor(allow='index\d+\.html$', restrict_css='.d2tu_3 a:last-child'),
              process_links='process_next_page_links', follow=True),
     ]
@@ -31,7 +31,7 @@ class RmwHbDetailSpider(CrawlSpider):
 
     def parse_start_url(self, response):
         for listItem in response.css('.d2_2 li'):
-            print(111, listItem.css('a::text').extract_first())
+            print(listItem.css('a::text').extract_first())
             yield NewsListItem(
                 _id=str(ObjectId()),
                 origin_key='rmw_hb',
@@ -68,10 +68,6 @@ class RmwHbDetailSpider(CrawlSpider):
             origin_key='rmw_hb',
         )
         return item
-
-    def process_list_links(self, links):
-        # duplicate
-        return links
 
     def process_next_page_links(self, links):
         for link in links:

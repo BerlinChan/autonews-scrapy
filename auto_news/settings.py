@@ -19,6 +19,10 @@ MONGO_URI = 'mongodb://localhost:27017/'
 MONGO_DATABASE = 'auto-news'
 
 LOG_ENABLED = True
+LOG_LEVEL = 'WARNING'
+
+DUPEFILTER_CLASS = 'auto_news.filters.SeenURLFilter'
+DUPEFILTER_DEBUG = False
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'auto_news (+http://www.yourdomain.com)'
