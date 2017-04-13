@@ -6,7 +6,7 @@ from scrapy.utils.project import get_project_settings
 os.environ.setdefault('SCRAPY_SETTINGS_MODULE', 'auto_news.settings')
 process = CrawlerProcess(get_project_settings())
 
-process.crawl("rmw_hb")
+# process.crawl("rmw_hb")
 process.crawl("rmw_hb_detail")
 
 # 执行所有 spider
