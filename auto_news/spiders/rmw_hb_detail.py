@@ -40,7 +40,7 @@ class RmwHbDetailSpider(CrawlSpider):
             category=response.css('.clink+ .clink::text').extract(),
             tags='',
             url=response.url,
-            content=response.css('.box_con p').extract_first(),
+            content=''.join(response.css('.box_con p').extract()),
             authorName=response.css('.author::text').extract_first(),
             editorName=response.css('.edit::text').extract_first(),
             date=arrow.get(response.css('.box01 .fl::text').extract_first()[:-5] + ' 08:00',
