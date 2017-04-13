@@ -59,7 +59,7 @@ class SocketOnNewsAdded(object):
     def process_item(self, item, spider):
         if isinstance(item, NewsListItem):
             # 发送到websocket服务
-            request('POST', self.http_server + 'listItem_added', data=json.dumps(item))
+            request('POST', self.http_server + 'listItem_added', data=json.dumps(dict(item)))
         return item
 
 
