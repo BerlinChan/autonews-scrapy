@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import scrapy
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from auto_news.items import NewsListItem, NewsDetailItem
@@ -32,26 +31,6 @@ class RmwHbDetailSpider(CrawlSpider):
 
     def closed(self, reason):
         print('Crawl complete: ' + self.origin['name'])
-
-    def parse_start_url(self, response):
-        for listItem in response.css('.d2_2 li'):
-            yield NewsListItem(
-                _id=str(ObjectId()),
-                origin_key=self.origin['key'],
-                origin_name=self.origin['name'],
-                url=response.urljoin(listItem.css('a::attr(href)').extract_first()),
-                title=listItem.css('a::text').extract_first(),
-                date=arrow.get(listItem.css('i::text').extract_first()[2:-2] + ' +08:00',
-                               'YYYY年MM月DD日 HH:mm ZZ').isoformat(),
-            )
-
-        # next page
-        last_btn_text = response.css('.d2tu_3 a:last-child::text').extract_first()
-        if last_btn_text == "下一页":
-            next_page = response.css('.d2tu_3 a:last-child::attr(href)').extract_first()
-            if next_page is not None:
-                next_page = response.urljoin(next_page)
-                yield scrapy.Request(next_page, callback=self.parse_start_url)
 
     def parse_detail_item(self, response):
         item = NewsDetailItem(

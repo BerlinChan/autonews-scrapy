@@ -3,7 +3,6 @@ import scrapy
 from bson.objectid import ObjectId
 from auto_news.items import NewsListItem, NewsDetailItem
 import arrow
-from datetime import datetime
 
 
 class RmwHbSpider(scrapy.Spider):

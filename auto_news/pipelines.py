@@ -37,7 +37,9 @@ class RemoveDuplicatePipeline(object):
         if isinstance(item, NewsListItem):
             if self.db['list'].find_one({'url': item.get('url')}) is not None:
                 raise DropItem("Already exist url: %s" % item.get('url'))
-        else:
+            else:
+                return item
+        elif isinstance(item, NewsDetailItem):
             return item
 
 
