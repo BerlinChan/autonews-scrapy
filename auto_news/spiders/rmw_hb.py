@@ -1,22 +1,17 @@
 # -*- coding: utf-8 -*-
-import json
 import scrapy
-from scrapy.spiders import Rule
-from scrapy.linkextractors import LinkExtractor
 from scrapy.loader import ItemLoader
 from auto_news.items import NewsListItem, NewsDetailItem
 from bson.objectid import ObjectId
-from bson import json_util
 import arrow
 
 
 class RmwHbSpider(scrapy.Spider):
     name = "rmw_hb"
     allowed_domains = ["hb.people.com.cn"]
-    start_urls = ['http://hb.people.com.cn/GB/337099/index1.html']
-    rules = [
-        # Rule(LinkExtractor(allow=("/subject/\d+$")), callback='parse_list'),
-        # Rule(LinkExtractor(allow=("/tag/[^/]+$",)), follow=True),
+    start_urls = [
+        'http://hb.people.com.cn/GB/337099/index1.html',
+        'http://hb.people.com.cn/GB/194146/194147/index.html'
     ]
     custom_settings = {
         'ITEM_PIPELINES': {
