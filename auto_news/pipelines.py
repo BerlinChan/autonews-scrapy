@@ -9,9 +9,9 @@ import pymongo
 from bson.objectid import ObjectId
 from requests import request
 import json
-from datetime import datetime
 from auto_news.items import NewsDetailItem, NewsListItem
 from scrapy.exceptions import DropItem
+from dateutil import parser
 
 
 class AutoNewsPipeline(object):
@@ -94,7 +94,6 @@ class InsertListItemPipeline(object):
     def process_item(self, item, spider):
         tempItem = item
         tempItem['_id'] = ObjectId(item.get('_id'))
-        tempItem['date'] = datetime.strptime(item.get('date'), '%Y-%m-%dT%H:%M:%S.%f')
-        print(22, tempItem.get('date'))
+        tempItem['date'] = parser.parse(item.get('date'))
         self.db[self.collection_name].insert(tempItem)
         return item
