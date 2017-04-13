@@ -1,4 +1,5 @@
 import os
+import time
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
@@ -13,4 +14,7 @@ process.crawl("rmw_hb_detail")
 # for spider_name in process.spider_loader.list():
 #     process.crawl(spider_name)
 
-process.start()  # the script will block here until all crawling jobs are finished
+while True:
+    process.start()  # the script will block here until all crawling jobs are finished
+    print('wait 5min')
+    time.sleep(5 * 60)

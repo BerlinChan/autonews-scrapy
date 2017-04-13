@@ -37,13 +37,8 @@ class RemoveDuplicatePipeline(object):
         if isinstance(item, NewsListItem):
             if self.db['list'].find_one({'url': item.get('url')}) is not None:
                 raise DropItem("Already exist url: %s" % item.get('url'))
-            else:
-                return item
-        elif isinstance(item, NewsDetailItem):
-            if self.db['detail'].find_one({'url': item.get('url')}) is not None:
-                raise DropItem("Already exist url: %s" % item.get('url'))
-            else:
-                return item
+        else:
+            return item
 
 
 class SocketOnNewsAdded(object):
@@ -57,6 +52,7 @@ class SocketOnNewsAdded(object):
         )
 
     def process_item(self, item, spider):
+        print(item['origin_name'] + ': ' + item['title'])
         if isinstance(item, NewsListItem):
             # 发送到websocket服务
             request('POST', self.http_server + 'listItem_added', data=json.dumps(dict(item)))

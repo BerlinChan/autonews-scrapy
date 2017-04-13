@@ -10,6 +10,7 @@ from datetime import datetime
 
 class RmwHbDetailSpider(CrawlSpider):
     name = "rmw_hb_detail"
+    origin = {'key': 'rmw_hb', 'name': '人民网-湖北频道'}
     allowed_domains = ["hb.people.com.cn"]
     start_urls = [
         'http://hb.people.com.cn/GB/337099/index1.html',
@@ -29,13 +30,15 @@ class RmwHbDetailSpider(CrawlSpider):
         }
     }
 
+    def closed(self, reason):
+        print('Crawl complete: ' + self.origin['name'])
+
     def parse_start_url(self, response):
         for listItem in response.css('.d2_2 li'):
-            print(listItem.css('a::text').extract_first())
             yield NewsListItem(
                 _id=str(ObjectId()),
-                origin_key='rmw_hb',
-                origin_name='人民网-湖北频道',
+                origin_key=self.origin['key'],
+                origin_name=self.origin['name'],
                 url=response.urljoin(listItem.css('a::attr(href)').extract_first()),
                 title=listItem.css('a::text').extract_first(),
                 date=arrow.get(listItem.css('i::text').extract_first()[2:-2] + ' +08:00',
@@ -64,8 +67,8 @@ class RmwHbDetailSpider(CrawlSpider):
             date=arrow.get(response.css('.box01 .fl::text').extract_first()[:-5] + ' 08:00',
                            'YYYY年MM月DD日HH:mm ZZ').isoformat(),
             crawledDate=datetime.utcnow().isoformat(),
-            origin_name='人民网-湖北频道',
-            origin_key='rmw_hb',
+            origin_name=self.origin['name'],
+            origin_key=self.origin['key'],
         )
         return item
 
