@@ -33,27 +33,49 @@ class RmwHbDetailSpider(CrawlSpider):
         print('Crawl complete: ' + self.origin['name'] + ' detail')
 
     def parse_detail_item(self, response):
-        item = NewsDetailItem(
-            _id=ObjectId(),
-            title=response.css('h1::text').extract_first(),
-            subTitle='',
-            category=response.css('.clink+ .clink::text').extract(),
-            tags='',
-            url=response.url,
-            content=''.join(response.css('.box_con p').extract()),
-            authorName=response.css('.author::text').extract_first(),
-            editorName=response.css('.edit::text').extract_first(),
-            date=arrow.get(response.css('.box01 .fl::text').extract_first()[:-5] + ' 08:00',
-                           'YYYY年MM月DD日HH:mm ZZ').isoformat(),
-            crawledDate=datetime.utcnow().isoformat(),
-            origin_name=self.origin['name'],
-            origin_key=self.origin['key'],
-        )
+        item = NewsDetailItem()
+        if response.css('.pic_content2').extract_first() is None:
+            # 高清大图模版，如 http://hb.people.com.cn/n2/2017/0314/c194063-29853256.html
+            item["_id"] = ObjectId()
+            item["title"] = response.css('h1::text').extract_first()
+            item["subTitle"] = ''
+            item["category"] = response.css('.clink~ .clink+ .clink::text').extract_first()
+            item["tags"] = ''
+            item["url"] = response.url
+            item["content"] = response.css('#picG img').extract_first() + \
+                              ''.join(response.css('.content p').extract())
+            item["articleSource"] = response.css('#picG .fr a::text').extract_first()
+            item["authorName"] = ''
+            item["editorName"] = response.css('#p_editor::text').extract_first()
+            item["date"] = arrow.get(response.css('#picG .fr::text').extract()[1].strip() + ' 08:00',
+                                     'YYYY年MM月DD日HH:mm ZZ').isoformat()
+            item["crawledDate"] = datetime.utcnow().isoformat()
+            item["origin_name"] = self.origin['name']
+            item["origin_key"] = self.origin['key']
+        else:
+            # 普通模版，如 http://hb.people.com.cn/n2/2017/0414/c337099-30031538.html
+            item["_id"] = ObjectId()
+            item["title"] = response.css('h1::text').extract_first()
+            item["subTitle"] = ''
+            item["category"] = response.css('.clink~ .clink+ .clink').extract_first()
+            item["tags"] = ''
+            item["url"] = response.url
+            item["content"] = ''.join(response.css('.box_con p').extract())
+            item["articleSource"] = response.css('.box01 .fl a::text').extract_first()
+            item["authorName"] = response.css('.author::text').extract_first()
+            item["editorName"] = response.css('.edit::text').extract_first()
+            item["date"] = arrow.get(response.css('.box01 .fl::text').extract_first()[:-5] + ' 08:00',
+                                     'YYYY年MM月DD日HH:mm ZZ').isoformat()
+            item["crawledDate"] = datetime.utcnow().isoformat()
+            item["origin_name"] = self.origin['name']
+            item["origin_key"] = self.origin['key']
+
         return item
 
-    def process_next_page_links(self, links):
-        for link in links:
-            if link.text == '下一页':
-                return links
-            else:
-                return []
+
+def process_next_page_links(self, links):
+    for link in links:
+        if link.text == '下一页':
+            return links
+        else:
+            return []
