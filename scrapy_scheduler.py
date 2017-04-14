@@ -1,38 +1,22 @@
-import os
-from apscheduler.schedulers.twisted import TwistedScheduler
-from twisted.internet import reactor
-from run_all_spiders import RunAllSpiders
-
-from twisted.internet import defer
-from scrapy.crawler import CrawlerRunner
+from scrapy.crawler import CrawlerProcess
+from auto_news.spiders.rmw_hb import RmwHbSpider
+from auto_news.spiders.rmw_hb_detail import RmwHbDetailSpider
 from scrapy.utils.project import get_project_settings
-from scrapy.utils.log import configure_logging
+from apscheduler.schedulers.twisted import TwistedScheduler
+from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR
 
 
-def job():
-    print('Run all spiders')
-    # 必须先加载项目settings配置
-    os.environ.setdefault('SCRAPY_SETTINGS_MODULE', 'auto_news.settings')
-    configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
-    runner = CrawlerRunner(get_project_settings())
-
-    @defer.inlineCallbacks
-    def crawl():
-        yield runner.crawl('rmw_hb')
-        yield runner.crawl('rmw_hb_detail')
-        reactor.stop()
-
-    crawl()
+def my_listener(event):
+    if event.exception:
+        print('The job crashed :(')
+    else:
+        print('The job worked :)')
 
 
-if __name__ == '__main__':
-    scheduler = TwistedScheduler()
-    scheduler.add_job(job, 'interval', seconds=10)
-    scheduler.start()
-    print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
-
-    # Execution will block here until Ctrl+C (Ctrl+Break on Windows) is pressed.
-    try:
-        reactor.run()
-    except (KeyboardInterrupt, SystemExit):
-        pass
+process = CrawlerProcess(get_project_settings())
+sched = TwistedScheduler()
+sched.add_listener(my_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
+sched.add_job(process.crawl, 'interval', args=[RmwHbSpider], seconds=1, max_instances=1)
+sched.add_job(process.crawl, 'interval', args=[RmwHbDetailSpider], seconds=1, max_instances=1)
+sched.start()
+process.start(False)  # Do not stop reactor after spider closes

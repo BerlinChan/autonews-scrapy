@@ -30,7 +30,7 @@ class RmwHbDetailSpider(CrawlSpider):
     }
 
     def closed(self, reason):
-        print('Crawl complete: ' + self.origin['name'])
+        print('Crawl complete: ' + self.origin['name'] + ' detail')
 
     def parse_detail_item(self, response):
         item = NewsDetailItem(

@@ -33,9 +33,10 @@ class NewsDetailItem(scrapy.Item):
     tags = scrapy.Field()  # 文章标签、关键词
     url = scrapy.Field()  # 文章地址
     content = scrapy.Field()  # 正文内容
+    articleSource = scrapy.Field()  # 文章来源
     authorName = scrapy.Field()  # 作者名
     editorName = scrapy.Field()  # 编辑姓名
     date = scrapy.Field()  # 文章发布日期时间戳
     crawledDate = scrapy.Field()  # 抓取日期时间戳
-    origin_name = scrapy.Field()  # 来源、出处名
-    origin_key = scrapy.Field()  # 指向 origin collection 中对应的 document id
+    origin_name = scrapy.Field()  # 抓取来源名
+    origin_key = scrapy.Field()  # 抓取来源key，指向 origin collection 中对应的 document id

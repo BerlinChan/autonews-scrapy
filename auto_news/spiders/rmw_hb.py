@@ -7,6 +7,7 @@ import arrow
 
 class RmwHbSpider(scrapy.Spider):
     name = "rmw_hb"
+    origin = {'key': 'rmw_hb', 'name': '人民网-湖北频道'}
     allowed_domains = ["hb.people.com.cn"]
     start_urls = [
         'http://hb.people.com.cn/GB/337099/index1.html',
@@ -25,8 +26,8 @@ class RmwHbSpider(scrapy.Spider):
             url = response.urljoin(listItem.css('a::attr(href)').extract_first())
             yield NewsListItem(
                 _id=str(ObjectId()),
-                origin_key='rmw_hb',
-                origin_name='人民网-湖北频道',
+                origin_key=self.origin['key'],
+                origin_name=self.origin['name'],
                 url=url,
                 title=listItem.css('a::text').extract_first(),
                 date=arrow.get(listItem.css('i::text').extract_first()[2:-2] + ' +08:00',
@@ -40,3 +41,6 @@ class RmwHbSpider(scrapy.Spider):
             if next_page is not None:
                 next_page = response.urljoin(next_page)
                 yield scrapy.Request(next_page, callback=self.parse)
+
+    def closed(self, reason):
+        print('Crawl complete: ' + self.origin['name'] + ' list')
