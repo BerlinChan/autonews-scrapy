@@ -20,6 +20,6 @@ def crawl():
 crawl()
 reactor.run()  # the script will block here until the last crawl call is finished
 
-# 执行所有 spider
-# for spider_name in runner.spider_loader.list():
-#     runner.crawl(spider_name)
+    # 执行所有 spider
+    # for spider_name in runner.spider_loader.list():
+    #     runner.crawl(spider_name)
