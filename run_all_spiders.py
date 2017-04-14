@@ -5,8 +5,8 @@ from scrapy.utils.project import get_project_settings
 from scrapy.utils.log import configure_logging
 
 # 必须先加载项目settings配置
-os.environ.setdefault('SCRAPY_SETTINGS_MODULE', 'auto_news.settings')
-configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
+os.environ.setdefault('scrapy_settings_module', 'auto_news.settings')
+configure_logging(get_project_settings())
 runner = CrawlerRunner(get_project_settings())
 
 
@@ -20,6 +20,6 @@ def crawl():
 crawl()
 reactor.run()  # the script will block here until the last crawl call is finished
 
-    # 执行所有 spider
-    # for spider_name in runner.spider_loader.list():
-    #     runner.crawl(spider_name)
+# 执行所有 spider
+# for spider_name in runner.spider_loader.list():
+#     runner.crawl(spider_name)
