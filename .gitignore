@@ -1,1 +1,6 @@
-.idea
+/.idea/
+/eggs/
+/build/
+/logs/
+/project.egg-info/
+/dbs/
