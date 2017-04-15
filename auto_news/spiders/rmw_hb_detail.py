@@ -43,13 +43,16 @@ class RmwHbDetailSpider(CrawlSpider):
             item["category"] = response.css('.clink~ .clink+ .clink::text').extract_first()
             item["tags"] = ''
             item["url"] = response.url
-            item["content"] = re.sub(r"/(NMediaFile/.+)", response.urljoin(r"../../../\1"),
+            item["content"] = re.sub(r"/(NMediaFile/.+\.jpg)", response.urljoin(r"../../../\1"),
                                      response.css('#picG img').extract_first()) + \
                               ''.join(response.css('.content p').extract())
-            item["articleSource"] = response.css('#picG .fr a::text').extract_first()
+            item["articleSource"] = response.css('#picG .fr a::text').extract_first() if response.css(
+                '#picG .fr a::text').extract_first() else response.css('.page_c a::text').extract_first()
             item["authorName"] = ''
             item["editorName"] = response.css('#p_editor::text').extract_first()
-            item["date"] = arrow.get(response.css('#picG .fr::text').extract()[1].strip() + ' 08:00',
+            item["date"] = arrow.get(response.css('#picG .fr::text').extract()[1].strip() + ' 08:00'
+                                     if len(response.css('#picG .fr::text').extract()) > 1
+                                     else response.css('.page_c+ .page_c::text').extract()[1].strip() + ' 08:00',
                                      'YYYY年MM月DD日HH:mm ZZ').isoformat()
             item["crawledDate"] = datetime.utcnow().isoformat()
             item["origin_name"] = self.origin['name']
@@ -59,10 +62,10 @@ class RmwHbDetailSpider(CrawlSpider):
             item["_id"] = ObjectId()
             item["title"] = response.css('h1::text').extract_first()
             item["subTitle"] = ''
-            item["category"] = response.css('.clink~ .clink+ .clink').extract_first()
+            item["category"] = response.css('.clink:last-child::text').extract_first()
             item["tags"] = ''
             item["url"] = response.url
-            item["content"] = re.sub(r"/(NMediaFile/.+)", response.urljoin(r"../../../\1"),
+            item["content"] = re.sub(r"/(NMediaFile/.+\.jpg)", response.urljoin(r"../../../\1"),
                                      ''.join(response.css('.box_con p').extract()))
             item["articleSource"] = response.css('.box01 .fl a::text').extract_first()
             item["authorName"] = response.css('.author::text').extract_first()
