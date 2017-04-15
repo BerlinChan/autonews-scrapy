@@ -5,6 +5,7 @@ from auto_news.items import NewsListItem, NewsDetailItem
 from bson.objectid import ObjectId
 import arrow
 from datetime import datetime
+import re
 
 
 class RmwHbDetailSpider(CrawlSpider):
@@ -34,15 +35,16 @@ class RmwHbDetailSpider(CrawlSpider):
 
     def parse_detail_item(self, response):
         item = NewsDetailItem()
-        if response.css('.pic_content2').extract_first() is None:
-            # 高清大图模版，如 http://hb.people.com.cn/n2/2017/0314/c194063-29853256.html
+        if response.css('.pic_content').extract_first() is not None:
+            # 大图模版，如 http://hb.people.com.cn/n2/2017/0413/c337099-30022706.html
             item["_id"] = ObjectId()
             item["title"] = response.css('h1::text').extract_first()
             item["subTitle"] = ''
             item["category"] = response.css('.clink~ .clink+ .clink::text').extract_first()
             item["tags"] = ''
             item["url"] = response.url
-            item["content"] = response.css('#picG img').extract_first() + \
+            item["content"] = re.sub(r"/(NMediaFile/.+)", response.urljoin(r"../../../\1"),
+                                     response.css('#picG img').extract_first()) + \
                               ''.join(response.css('.content p').extract())
             item["articleSource"] = response.css('#picG .fr a::text').extract_first()
             item["authorName"] = ''
@@ -60,7 +62,8 @@ class RmwHbDetailSpider(CrawlSpider):
             item["category"] = response.css('.clink~ .clink+ .clink').extract_first()
             item["tags"] = ''
             item["url"] = response.url
-            item["content"] = ''.join(response.css('.box_con p').extract())
+            item["content"] = re.sub(r"/(NMediaFile/.+)", response.urljoin(r"../../../\1"),
+                                     ''.join(response.css('.box_con p').extract()))
             item["articleSource"] = response.css('.box01 .fl a::text').extract_first()
             item["authorName"] = response.css('.author::text').extract_first()
             item["editorName"] = response.css('.edit::text').extract_first()
