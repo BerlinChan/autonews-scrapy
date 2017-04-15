@@ -3,3 +3,4 @@ pymongo
 arrow
 scrapyd
 scrapyd-client
+apscheduler
