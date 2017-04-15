@@ -13,10 +13,11 @@ runner = CrawlerRunner(get_project_settings())
 @defer.inlineCallbacks
 def crawl():
     # 执行所有 spider
-    for spider_name in runner.spider_loader.list():
-        yield runner.crawl(spider_name)
-    # yield runner.crawl('rmw_hb')
-    # yield runner.crawl('rmw_hb_detail')
+    # for spider_name in runner.spider_loader.list():
+    #     yield runner.crawl(spider_name)
+
+    yield runner.crawl('rmw_hb')
+    yield runner.crawl('rmw_hb_detail')
     reactor.stop()
 
 
