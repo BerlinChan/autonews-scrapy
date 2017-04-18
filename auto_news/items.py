@@ -30,7 +30,7 @@ class NewsDetailItem(scrapy.Item):
     title = scrapy.Field()  # 文章标题
     subTitle = scrapy.Field()  # 文章副标题
     category = scrapy.Field()  # 文章分类、子栏目、子版面、子频道
-    tags = scrapy.Field()  # 文章标签、关键词
+    keywords = scrapy.Field()  # 文章关键词
     url = scrapy.Field()  # 文章地址
     content = scrapy.Field()  # 正文内容
     articleSource = scrapy.Field()  # 文章来源

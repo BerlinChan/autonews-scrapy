@@ -4,3 +4,4 @@ arrow
 scrapyd
 scrapyd-client
 apscheduler
+snownlp

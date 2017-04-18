@@ -12,6 +12,8 @@ import json
 from auto_news.items import NewsDetailItem, NewsListItem
 from scrapy.exceptions import DropItem
 from dateutil import parser
+from snownlp import SnowNLP
+from bs4 import BeautifulSoup
 
 
 class RemoveDuplicatePipeline(object):
@@ -59,6 +61,17 @@ class SocketOnNewsAdded(object):
             # 发送到websocket服务
             request('POST', self.http_server + 'listItem_added', data=json.dumps(dict(item)))
         return item
+
+
+class AddTagsPipeline(object):
+    def process_item(self, item, spider):
+        if isinstance(item, NewsListItem):
+            return item
+        elif isinstance(item, NewsDetailItem):
+            temp_item = item
+            content_text = BeautifulSoup(item['content']).get_text()
+            temp_item['keywords'] = SnowNLP(content_text).keywords(5)
+            return temp_item
 
 
 class InsertItemPipeline(object):

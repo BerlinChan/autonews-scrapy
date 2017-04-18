@@ -26,6 +26,7 @@ class RmwHbDetailSpider(CrawlSpider):
         'ITEM_PIPELINES': {
             'auto_news.pipelines.RemoveDuplicatePipeline': 200,
             'auto_news.pipelines.SocketOnNewsAdded': 300,
+            'auto_news.pipelines.AddTagsPipeline': 350,
             'auto_news.pipelines.InsertItemPipeline': 400,
         }
     }
@@ -41,7 +42,7 @@ class RmwHbDetailSpider(CrawlSpider):
             item["title"] = response.css('h1::text').extract_first()
             item["subTitle"] = ''
             item["category"] = response.css('.clink~ .clink+ .clink::text').extract_first()
-            item["tags"] = ''
+            item["keywords"] = ''
             item["url"] = response.url
             item["content"] = re.sub(r"/(NMediaFile/.+\.jpg)", response.urljoin(r"../../../\1"),
                                      response.css('#picG img').extract_first()) + \
@@ -63,7 +64,7 @@ class RmwHbDetailSpider(CrawlSpider):
             item["title"] = response.css('h1::text').extract_first()
             item["subTitle"] = ''
             item["category"] = response.css('.clink:last-child::text').extract_first()
-            item["tags"] = ''
+            item["keywords"] = ''
             item["url"] = response.url
             item["content"] = re.sub(r"/(NMediaFile/.+\.jpg)", response.urljoin(r"../../../\1"),
                                      ''.join(response.css('.box_con p').extract()))
