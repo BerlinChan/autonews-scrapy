@@ -5,3 +5,5 @@ scrapyd
 scrapyd-client
 apscheduler
 snownlp
+pyltp
+JPype1-py3

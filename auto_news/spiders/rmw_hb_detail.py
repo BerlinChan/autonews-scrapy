@@ -27,6 +27,7 @@ class RmwHbDetailSpider(CrawlSpider):
             'auto_news.pipelines.RemoveDuplicatePipeline': 200,
             'auto_news.pipelines.SocketOnNewsAdded': 300,
             'auto_news.pipelines.AddTagsPipeline': 350,
+            # 'auto_news.pipelines.ClassifyNewsPipeline': 360,
             'auto_news.pipelines.InsertItemPipeline': 400,
         }
     }

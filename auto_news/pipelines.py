@@ -74,6 +74,19 @@ class AddTagsPipeline(object):
             return temp_item
 
 
+class ClassifyNewsPipeline(object):
+    def process_item(self, item, spider):
+        if isinstance(item, NewsListItem):
+            return item
+        elif isinstance(item, NewsDetailItem):
+            temp_item = item
+            content_text = BeautifulSoup(item['content']).get_text()
+
+            # temp_classify = re.match(r'Classifying.+:(.+)\s', out_text.decode('utf-8')).group(1).strip()
+            temp_item['nlpClassify'] = ''
+            return temp_item
+
+
 class InsertItemPipeline(object):
     collection_name = 'list'
 
