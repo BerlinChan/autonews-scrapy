@@ -52,7 +52,7 @@ class RmwHbDetailSpider(CrawlSpider):
             item["articleSource"] = response.css('#picG .fr a::text').extract_first() if response.css(
                 '#picG .fr a::text').extract_first() else response.css('.page_c a::text').extract_first()
             item["authorName"] = ''
-            item["editorName"] = response.css('#p_editor::text').extract_first()
+            item["editorName"] = response.css('#p_editor::text').extract_first()[1:-1]
             item["date"] = arrow.get(response.css('#picG .fr::text').extract()[1].strip() + ' 08:00'
                                      if len(response.css('#picG .fr::text').extract()) > 1
                                      else response.css('.page_c+ .page_c::text').extract()[1].strip() + ' 08:00',
@@ -72,7 +72,7 @@ class RmwHbDetailSpider(CrawlSpider):
                                      ''.join(response.css('.box_con p').extract()))
             item["articleSource"] = response.css('.box01 .fl a::text').extract_first()
             item["authorName"] = response.css('.author::text').extract_first()
-            item["editorName"] = response.css('.edit::text').extract_first()
+            item["editorName"] = response.css('.edit::text').extract_first()[1:-1]
             item["date"] = arrow.get(response.css('.box01 .fl::text').extract_first()[:-5] + ' 08:00',
                                      'YYYY年MM月DD日HH:mm ZZ').isoformat()
             item["crawledDate"] = datetime.utcnow().isoformat()

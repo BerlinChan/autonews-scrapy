@@ -17,6 +17,7 @@ from bs4 import BeautifulSoup
 from jpype import *
 
 
+# 从 mongodb 集的 url field 过滤重复
 class RemoveDuplicatePipeline(object):
     def __init__(self, mongo_uri, mongo_db):
         self.mongo_uri = mongo_uri
@@ -46,6 +47,7 @@ class RemoveDuplicatePipeline(object):
             return item
 
 
+# 请求 websocket 服务，通知客户端更新
 class SocketOnNewsAdded(object):
     def __init__(self, http_server):
         self.http_server = http_server
@@ -64,6 +66,7 @@ class SocketOnNewsAdded(object):
         return item
 
 
+# nlp处理，提取关键字
 class NLPKeywordPipeline(object):
     def process_item(self, item, spider):
         if isinstance(item, NewsListItem):
@@ -75,6 +78,7 @@ class NLPKeywordPipeline(object):
             return temp_item
 
 
+# nlp处理，新闻分类
 class NLPClassifyPipeline(object):
     def __init__(self):
         startJVM(getDefaultJVMPath(),
@@ -118,6 +122,7 @@ class NLPClassifyPipeline(object):
             return temp_item
 
 
+# nlp处理，情感评价
 class NLPSentimentPipeline(object):
     def process_item(self, item, spider):
         if isinstance(item, NewsListItem):
@@ -131,6 +136,7 @@ class NLPSentimentPipeline(object):
             return temp_item
 
 
+# 插入记录到数据库
 class InsertItemPipeline(object):
     collection_name = 'list'
 
