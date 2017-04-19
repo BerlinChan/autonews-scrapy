@@ -46,7 +46,7 @@ class RmwHbDetailSpider(CrawlSpider):
             item["category"] = response.css('.clink~ .clink+ .clink::text').extract_first()
             item["keywords"] = ''
             item["url"] = response.url
-            item["content"] = re.sub(r"/(NMediaFile/.+\.jpg)", response.urljoin(r"../../../\1"),
+            item["content"] = re.sub(r"/(NMediaFile/.+\.jpg)", r"http://hb.people.com.cn/\1",
                                      response.css('#picG img').extract_first()) + \
                               ''.join(response.css('.content p').extract())
             item["articleSource"] = response.css('#picG .fr a::text').extract_first() if response.css(
@@ -68,7 +68,7 @@ class RmwHbDetailSpider(CrawlSpider):
             item["category"] = response.css('.clink:last-child::text').extract_first()
             item["keywords"] = ''
             item["url"] = response.url
-            item["content"] = re.sub(r"/(NMediaFile/.+\.jpg)", response.urljoin(r"../../../\1"),
+            item["content"] = re.sub(r"/(NMediaFile/.+\.jpg)", r"http://hb.people.com.cn/\1",
                                      ''.join(response.css('.box_con p').extract()))
             item["articleSource"] = response.css('.box01 .fl a::text').extract_first()
             item["authorName"] = response.css('.author::text').extract_first()
