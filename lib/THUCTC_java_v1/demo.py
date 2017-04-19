@@ -9,8 +9,8 @@ startJVM(getDefaultJVMPath(),
          "./",
          "-Xms1g", "-Xmx1g")  # 启动JVM，Linux需替换分号;为冒号:
 BasicTextClassifier = JClass('org.thunlp.text.classifiers.BasicTextClassifier')
-ClassifyResult = JClass('org.thunlp.text.classifiers.ClassifyResult')
-LinearBigramChineseTextClassifier = JClass('org.thunlp.text.classifiers.LinearBigramChineseTextClassifier')
+# ClassifyResult = JClass('org.thunlp.text.classifiers.ClassifyResult')
+# LinearBigramChineseTextClassifier = JClass('org.thunlp.text.classifiers.LinearBigramChineseTextClassifier')
 
 # 新建分类器对象
 classifier = BasicTextClassifier()

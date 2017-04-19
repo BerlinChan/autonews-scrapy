@@ -26,8 +26,9 @@ class RmwHbDetailSpider(CrawlSpider):
         'ITEM_PIPELINES': {
             'auto_news.pipelines.RemoveDuplicatePipeline': 200,
             'auto_news.pipelines.SocketOnNewsAdded': 300,
-            'auto_news.pipelines.AddTagsPipeline': 350,
-            # 'auto_news.pipelines.ClassifyNewsPipeline': 360,
+            'auto_news.pipelines.NLPKeywordPipeline': 350,
+            'auto_news.pipelines.NLPClassifyPipeline': 360,
+            'auto_news.pipelines.NLPSentimentPipeline': 370,
             'auto_news.pipelines.InsertItemPipeline': 400,
         }
     }
@@ -80,10 +81,9 @@ class RmwHbDetailSpider(CrawlSpider):
 
         return item
 
-
-def process_next_page_links(self, links):
-    for link in links:
-        if link.text == '下一页':
-            return links
-        else:
-            return []
+    def process_next_page_links(self, links):
+        for link in links:
+            if link.text == '下一页':
+                return links
+            else:
+                return []

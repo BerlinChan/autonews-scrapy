@@ -14,6 +14,7 @@ from scrapy.exceptions import DropItem
 from dateutil import parser
 from snownlp import SnowNLP
 from bs4 import BeautifulSoup
+from jpype import *
 
 
 class RemoveDuplicatePipeline(object):
@@ -63,7 +64,7 @@ class SocketOnNewsAdded(object):
         return item
 
 
-class AddTagsPipeline(object):
+class NLPKeywordPipeline(object):
     def process_item(self, item, spider):
         if isinstance(item, NewsListItem):
             return item
@@ -74,16 +75,59 @@ class AddTagsPipeline(object):
             return temp_item
 
 
-class ClassifyNewsPipeline(object):
+class NLPClassifyPipeline(object):
+    def __init__(self):
+        startJVM(getDefaultJVMPath(),
+                 "-Djava.class.path="
+                 "./lib/THUCTC_java_v1/liblinear-1.8.jar:"
+                 "./lib/THUCTC_java_v1/THULAC_java_v1.jar:"
+                 "./lib/THUCTC_java_v1/",
+                 "-Xms1g", "-Xmx1g")  # 启动JVM，Linux需替换分号;为冒号:
+        BasicTextClassifier = JClass('org.thunlp.text.classifiers.BasicTextClassifier')
+
+        # 新建分类器对象
+        self.classifier = BasicTextClassifier()
+        # 设置分类种类，并读取模型
+        self.defaultArguments = "-l ./lib/THUCTC_java_v1/news_model/"
+        self.classifier.Init(self.defaultArguments.split(" "))
+        self.classifier.runAsBigramChineseTextClassifier()
+
+    def open_spider(self, spider):
+        pass
+
+    def close_spider(self, spider):
+        shutdownJVM()
+
     def process_item(self, item, spider):
         if isinstance(item, NewsListItem):
             return item
         elif isinstance(item, NewsDetailItem):
+            content_text = BeautifulSoup(item['content']).get_text()
+            top_n = 2  # 保留最有可能的2个结果
+            result = self.classifier.classifyText(content_text, top_n)
+
             temp_item = item
+            temp_item['nlpClassify'] = []
+            for i in range(top_n):
+                # 分类名称，以及概率值。
+                temp_item['nlpClassify'].append({
+                    'name': self.classifier.getCategoryName(result[i].label),
+                    'prob': result[i].prob,
+                })
+
+            return temp_item
+
+
+class NLPSentimentPipeline(object):
+    def process_item(self, item, spider):
+        if isinstance(item, NewsListItem):
+            return item
+        elif isinstance(item, NewsDetailItem):
             content_text = BeautifulSoup(item['content']).get_text()
 
-            # temp_classify = re.match(r'Classifying.+:(.+)\s', out_text.decode('utf-8')).group(1).strip()
-            temp_item['nlpClassify'] = ''
+            temp_item = item
+            temp_item['nlpSentiment'] = SnowNLP(content_text).sentiments
+
             return temp_item
 
 
