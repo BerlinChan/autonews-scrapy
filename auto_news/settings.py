@@ -24,6 +24,13 @@ LOG_LEVEL = 'ERROR'
 DUPEFILTER_CLASS = 'auto_news.filters.SeenURLFilter'
 DUPEFILTER_DEBUG = False
 
+# Enable or disable spider middlewares
+# See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
+SPIDER_MIDDLEWARES = {
+    # 'auto_news.middlewares.AutoNewsSpiderMiddleware': 543,
+    'auto_news.middlewares.StartJVMMiddleware': 600,
+}
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'auto_news (+http://www.yourdomain.com)'
 
@@ -51,12 +58,6 @@ ROBOTSTXT_OBEY = True
 # DEFAULT_REQUEST_HEADERS = {
 #   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 #   'Accept-Language': 'en',
-# }
-
-# Enable or disable spider middlewares
-# See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-# SPIDER_MIDDLEWARES = {
-#    'auto_news.middlewares.AutoNewsSpiderMiddleware': 543,
 # }
 
 # Enable or disable downloader middlewares

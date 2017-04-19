@@ -16,8 +16,9 @@ def crawl():
     # for spider_name in runner.spider_loader.list():
     #     yield runner.crawl(spider_name)
 
-    yield runner.crawl('rmw_hb')
-    yield runner.crawl('rmw_hb_detail')
+    # yield runner.crawl('rmw_hb')
+    # yield runner.crawl('rmw_hb_detail')
+    yield runner.crawl('ctdsb')
     reactor.stop()
 
 

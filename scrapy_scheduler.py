@@ -7,11 +7,8 @@ logging.basicConfig()
 
 
 def spider_rmw():
-    (list_out, detail_out) = (
-        subprocess.check_output("scrapy crawl rmw_hb", shell=True),
-        subprocess.check_output("scrapy crawl rmw_hb_detail", shell=True)
-    )
-    out_text = list_out.decode('utf-8') + detail_out.decode('utf-8')
+    out_text = subprocess.check_output("scrapy crawl rmw_hb", shell=True).decode('utf-8') + \
+               subprocess.check_output("scrapy crawl rmw_hb_detail", shell=True).decode('utf-8')
     print(out_text)
 
 

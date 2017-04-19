@@ -33,9 +33,6 @@ class RmwHbDetailSpider(CrawlSpider):
         }
     }
 
-    def closed(self, reason):
-        print('Crawl complete: ' + self.origin['name'] + ' detail')
-
     def parse_detail_item(self, response):
         item = NewsDetailItem()
         if response.css('.pic_content').extract_first() is not None:

@@ -6,6 +6,26 @@
 # http://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from jpype import *
+
+# 全局 scrapy 启动时 startJVM
+startJVM(getDefaultJVMPath(),
+         "-Djava.class.path="
+         "./auto_news/lib/hanlp-1.3.2/hanlp-1.3.2.jar:"
+         "./auto_news/lib/hanlp-1.3.2/:"
+         "./auto_news/lib/THUCTC_java_v1/liblinear-1.8.jar:"
+         "./auto_news/lib/THUCTC_java_v1/THULAC_java_v1.jar:"
+         "./auto_news/lib/THUCTC_java_v1/",
+         "-Xms1g", "-Xmx1g")  # 启动JVM，Linux需替换分号;为冒号:
+HanLP = JClass('com.hankcs.hanlp.HanLP')
+
+BasicTextClassifier = JClass('org.thunlp.text.classifiers.BasicTextClassifier')
+# 新建分类器对象
+classifier = BasicTextClassifier()
+# 设置分类种类，并读取模型
+defaultArguments = "-l ./auto_news/lib/THUCTC_java_v1/news_model/"
+classifier.Init(defaultArguments.split(" "))
+classifier.runAsBigramChineseTextClassifier()
 
 
 class AutoNewsSpiderMiddleware(object):
@@ -54,3 +74,23 @@ class AutoNewsSpiderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+class StartJVMMiddleware(object):
+    @classmethod
+    def from_crawler(cls, crawler):
+        # This method is used by Scrapy to create your spiders.
+        s = cls()
+        crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
+        crawler.signals.connect(s.spider_closed, signal=signals.spider_closed)
+        return s
+
+    def spider_opened(self, spider):
+        print('Spider opened: %s' % spider.origin['name'])
+
+        # 传递 java 对象实例给 spiders
+        spider.HanLP = HanLP
+        spider.classifier = classifier
+
+    def spider_closed(self, spider):
+        print('Crawl complete: ' + spider.origin['name'])
