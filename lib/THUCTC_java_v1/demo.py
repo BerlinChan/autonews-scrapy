@@ -24,7 +24,6 @@ classifier.runAsBigramChineseTextClassifier()
 text = "再次回到世锦赛的赛场上，林丹终于变回了以前的那个超级丹."
 topN = 3  # 保留最有可能的3个结果
 result = classifier.classifyText(text, topN)
-print(result)
 for i in range(topN):
     # 输出分类编号，分类名称，以及概率值。
     print(result[i].label,

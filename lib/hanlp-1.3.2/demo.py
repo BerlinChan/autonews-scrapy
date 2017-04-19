@@ -7,6 +7,7 @@ startJVM(getDefaultJVMPath(),
          "./hanlp-1.3.2.jar:"
          "./",
          "-Xms1g", "-Xmx1g")  # 启动JVM，Linux需替换分号;为冒号:
+
 HanLP = JClass('com.hankcs.hanlp.HanLP')
 # 中文分词
 print(HanLP.segment('你好，欢迎在Python中调用HanLP的API'))
@@ -22,7 +23,17 @@ testCases = [
 for sentence in testCases:
     print(HanLP.segment(sentence))
 
-# 命名实体识别与词性标注
+# 命名实体识别
+StandardTokenizer = JClass('com.hankcs.hanlp.tokenizer.StandardTokenizer')
+print(StandardTokenizer.segment("我在上海林原科技有限公司兼职工作，"
+                                "我经常在台川喜宴餐厅吃饭，"
+                                "偶尔去开元地中海影城看电影。"))
+StandardTokenizer.SEGMENT.enableAllNamedEntityRecognize(True)
+print(StandardTokenizer.segment("我在上海林原科技有限公司兼职工作，"
+                                "我经常在台川喜宴餐厅吃饭，"
+                                "偶尔去开元地中海影城看电影。"))
+
+# 词性标注
 NLPTokenizer = JClass('com.hankcs.hanlp.tokenizer.NLPTokenizer')
 print(NLPTokenizer.segment('中国科学院计算技术研究所的宗成庆教授正在教授自然语言处理课程'))
 
