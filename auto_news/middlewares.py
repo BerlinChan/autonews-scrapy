@@ -86,11 +86,18 @@ class StartJVMMiddleware(object):
         return s
 
     def spider_opened(self, spider):
-        print('Spider opened: %s' % spider.origin['name'])
+        print('Spider opened: %s' % spider.name)
 
         # 传递 java 对象实例给 spiders
         spider.HanLP = HanLP
         spider.classifier = classifier
 
     def spider_closed(self, spider):
-        print('Crawl complete: ' + spider.origin['name'])
+        print('Crawl complete: ' + spider.name)
+
+
+class EmptyCookiesMiddleware(object):
+    """ 清空Ccookies """
+
+    def process_request(self, request, spider):
+        request.cookies = {}

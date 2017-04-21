@@ -42,7 +42,7 @@ class RmwHbDetailSpider(CrawlSpider):
             item["subTitle"] = ''
             item["category"] = response.css('.clink~ .clink+ .clink::text').extract_first()
             item["keywords"] = ''
-            item["url"] = response.url
+            item["url"] = response.url.lower()
             item["content"] = re.sub(r"/(NMediaFile/.+\.jpg)", r"http://hb.people.com.cn/\1",
                                      response.css('#picG img').extract_first()) + \
                               ''.join(response.css('.content p').extract())

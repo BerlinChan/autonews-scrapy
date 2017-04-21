@@ -38,7 +38,7 @@ class RemoveDuplicatePipeline(object):
 
     def process_item(self, item, spider):
         if isinstance(item, NewsListItem):
-            if self.db['list'].find_one({'url': item.get('url')}) is not None:
+            if self.db['list'].find_one({'url': item.get('url').lower()}) is not None:
                 raise DropItem("Already exist url: %s" % item.get('url'))
             else:
                 return item
@@ -72,7 +72,7 @@ class NLPKeywordPipeline(object):
             pass
         elif isinstance(item, NewsDetailItem):
             item['keywords'] = []
-            content_text = BeautifulSoup(item['content']).get_text()
+            content_text = BeautifulSoup(item['content'], "lxml").get_text()
             if content_text is not None:
                 temp_keywords = spider.HanLP.extractKeyword(content_text, 5)
                 for i in range(len(temp_keywords)):
@@ -89,7 +89,7 @@ class NLPClassifyPipeline(object):
         elif isinstance(item, NewsDetailItem):
             item['nlpClassify'] = []
             top_n = 2  # 保留最有可能的2个结果
-            content_text = BeautifulSoup(item['content']).get_text()
+            content_text = BeautifulSoup(item['content'], "lxml").get_text()
             if content_text is not None:
                 result = spider.classifier.classifyText(content_text, top_n)
                 for i in range(len(result)):
@@ -108,7 +108,7 @@ class NLPSentimentPipeline(object):
         if isinstance(item, NewsListItem):
             pass
         elif isinstance(item, NewsDetailItem):
-            content_text = BeautifulSoup(item['content']).get_text()
+            content_text = BeautifulSoup(item['content'], "lxml").get_text()
             if content_text is not None:
                 item['nlpSentiment'] = SnowNLP(content_text).sentiments
 

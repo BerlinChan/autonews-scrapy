@@ -26,9 +26,9 @@ class SeenURLFilter(RFPDupeFilter):
         self.client.close()
 
     def request_seen(self, request):
-        if request.url in self.urls_seen:
+        if request.url.lower() in self.urls_seen:
             return True
-        elif self.db['detail'].find_one({'url': request.url}):
+        elif self.db['detail'].find_one({'url': request.url.lower()}):
             return True
         else:
-            self.urls_seen.add(request.url)
+            self.urls_seen.add(request.url.lower())
