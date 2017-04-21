@@ -151,3 +151,12 @@ class InsertItemPipeline(object):
             temp_item['crawledDate'] = parser.parse(item.get('crawledDate'))
             self.db['detail'].insert(dict(temp_item))
             return item
+
+
+# drop empty detail item
+class DropEmptyDetailItemPipeline(object):
+    def process_item(self, item, spider):
+        if item is None:
+            raise DropItem("Drop empty detail item: %s" % item.get('url'))
+        else:
+            return item
