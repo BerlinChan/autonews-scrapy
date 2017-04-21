@@ -49,6 +49,7 @@ class HbrbSpider(CrawlSpider):
     ]
     custom_settings = {
         'CONCURRENT_REQUESTS': 1,
+        'DOWNLOAD_DELAY': 2,  # 间隔时间
         'SPIDER_MIDDLEWARES': {
             'auto_news.middlewares.EmptyCookiesMiddleware': 500,
             'auto_news.middlewares.StartJVMMiddleware': 600,
