@@ -18,7 +18,7 @@ def crawl():
 
     # yield runner.crawl('rmw_hb')
     # yield runner.crawl('rmw_hb_detail')
-    # yield runner.crawl('hbrb')
+    yield runner.crawl('hbrb')
     yield runner.crawl('cjrb')
     reactor.stop()
 
