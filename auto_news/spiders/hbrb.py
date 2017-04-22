@@ -31,7 +31,7 @@ class HbrbSpider(CrawlSpider):
     """
     name = "hbrb"
     allowed_domains = ["cnhubei.com"]
-    todayDateStr = arrow.utcnow().format('YYYYMMDD')
+    todayDateStr = arrow.now().format('YYYYMMDD')
     start_urls = [
         'http://ctdsb.cnhubei.com/HTML/ctdsb/' + todayDateStr + '/',
         'http://ctjb.cnhubei.com/HTML/ctjb/' + todayDateStr + '/',
@@ -49,7 +49,7 @@ class HbrbSpider(CrawlSpider):
     ]
     custom_settings = {
         'CONCURRENT_REQUESTS': 1,
-        'DOWNLOAD_DELAY': 2,  # 间隔时间
+        'DOWNLOAD_DELAY': 1.6,  # 间隔时间
         'SPIDER_MIDDLEWARES': {
             'auto_news.middlewares.EmptyCookiesMiddleware': 500,
             'auto_news.middlewares.StartJVMMiddleware': 600,
@@ -68,9 +68,9 @@ class HbrbSpider(CrawlSpider):
     def parse_detail_item(self, response):
         item = NewsDetailItem()
         item["_id"] = ObjectId()
-        item["title"] = response.css('#Table17 tr:nth-child(2) td::text').extract_first()
+        item["title"] = response.css('#Table17 tr:nth-child(1) td::text').extract_first()
         item["subTitle"] = ''.join(
-            response.css('#Table17 tr:nth-child(1) td::text,'
+            response.css('#Table17 tr:nth-child(2) td::text,'
                          ' #Table17 tr:nth-child(3) td::text').extract())
         item["category"] = ''.join(
             response.css('#Table16 tr:nth-child(1) td:nth-child(1)::text ,'

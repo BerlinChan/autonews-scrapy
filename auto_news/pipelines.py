@@ -153,7 +153,7 @@ class InsertItemPipeline(object):
             return item
 
 
-# drop empty detail item
+# drop empty detail item 用于当页面返回错误时
 class DropEmptyDetailItemPipeline(object):
     def process_item(self, item, spider):
         if item is None:
