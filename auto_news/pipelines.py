@@ -59,8 +59,8 @@ class SocketOnNewsAdded(object):
 
     def process_item(self, item, spider):
         # 发送到websocket服务
-        send_title = (item['title'] if item['title'] is not None else '') + \
-                     (item['subTitle'] if item['subTitle'] is not None else '')
+        send_title = ('' if item['title'] is None else item['title']) + \
+                     ('' if item['subTitle'] is None else item['subTitle'])
         print(item['origin_name'] + ': ' + send_title)
         if isinstance(item, NewsListItem):
             request('POST', self.http_server + 'listItem_added', data=json.dumps(dict(item)))
@@ -73,7 +73,7 @@ class SocketOnNewsAdded(object):
                 'date': item['date'],
                 'origin_key': item['origin_key'],
             }
-            request('POST', self.http_server + 'listItem_added', data=json.dumps(send_item))
+            request('POST', self.http_server + 'listItem_added', data=json.dumps(dict(send_item)))
         return item
 
 

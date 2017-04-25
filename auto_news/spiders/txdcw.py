@@ -42,13 +42,14 @@ class TxdcwSpider(CrawlSpider):
         'http://hb.qq.com/l/jm/jmyw/jmtt/list2015015104550.htm',  # 荆门-新闻列表
         'http://hb.qq.com/l/jz/jzyw/jzywlist.htm',  # 荆州-新闻列表
         'http://hb.qq.com/l/xt/xtyw/list20160127112918.htm',  # 仙桃-新闻列表
-        'http://hb.qq.com/l/sy/synews/shiyan-news-list.htm',  # 十堰-新闻列表
+        # 'http://hb.qq.com/l/sy/synews/shiyan-news-list.htm',  # 十堰-新闻列表
     ]
     rules = [
-        Rule(LinkExtractor(allow='\.html$',
-                           restrict_css='td+ td td td .info2 , td+ td td td .info1'),
+        Rule(LinkExtractor(allow='\d{8}/\d{6}\.htm$',
+                           restrict_css='.newslist li'),
              callback='parse_detail_item'),
-        Rule(LinkExtractor(allow='open\(\'\w+\.html', tags='td', attrs='onclick'),
+        Rule(LinkExtractor(allow='.+\.htm$',
+                           restrict_css='.newslist+ .pageNav a:last-child'),
              process_links='process_next_page_links', follow=True),
     ]
     custom_settings = {
@@ -98,7 +99,7 @@ class TxdcwSpider(CrawlSpider):
 
     def process_next_page_links(self, links):
         for link in links:
-            link.url = re.search(r'(http.+\d{8}/)window', link.url).group(1) + \
-                       re.search(r'open\(\'(\w+\.html)', link.url).group(1)
-
-        return links
+            if link.text == '下一页>':
+                return links
+            else:
+                return []
