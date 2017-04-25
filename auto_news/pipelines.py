@@ -66,14 +66,14 @@ class SocketOnNewsAdded(object):
             request('POST', self.http_server + 'listItem_added', data=json.dumps(dict(item)))
         elif isinstance(item, NewsDetailItem):
             send_item = {
-                '_id': item['_id'],
+                '_id': str(item['_id']),
                 'url': item['url'],
                 'title': item['title'],
                 'subTitle': item['subTitle'],
                 'date': item['date'],
                 'origin_key': item['origin_key'],
             }
-            request('POST', self.http_server + 'listItem_added', data=json.dumps(dict(send_item)))
+            request('POST', self.http_server + 'listItem_added', data=json.dumps(send_item))
         return item
 
 
