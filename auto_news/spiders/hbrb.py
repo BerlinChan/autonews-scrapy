@@ -50,10 +50,6 @@ class HbrbSpider(CrawlSpider):
     custom_settings = {
         'CONCURRENT_REQUESTS': 1,
         'DOWNLOAD_DELAY': 1.6,  # 间隔时间
-        'SPIDER_MIDDLEWARES': {
-            'auto_news.middlewares.EmptyCookiesMiddleware': 500,
-            'auto_news.middlewares.StartJVMMiddleware': 600,
-        },
         'ITEM_PIPELINES': {
             # 'auto_news.pipelines.DropEmptyDetailItemPipeline': 100,
             'auto_news.pipelines.RemoveDuplicatePipeline': 200,
@@ -68,10 +64,11 @@ class HbrbSpider(CrawlSpider):
     def parse_detail_item(self, response):
         item = NewsDetailItem()
         item["_id"] = ObjectId()
-        item["title"] = response.css('#Table17 tr:nth-child(1) td::text').extract_first()
-        item["subTitle"] = ''.join(
-            response.css('#Table17 tr:nth-child(2) td::text,'
-                         ' #Table17 tr:nth-child(3) td::text').extract())
+        title0 = response.css('#Table17 tr:nth-child(1) td::text').extract_first()
+        title1 = response.css('#Table17 tr:nth-child(2) td::text').extract_first()
+        item["title"] = title0 if title0 is not None else title1
+        item["subTitle"] = title1 if title0 is not None \
+            else response.css('#Table17 tr:nth-child(3) td::text').extract_first()
         item["category"] = ''.join(
             response.css('#Table16 tr:nth-child(1) td:nth-child(1)::text ,'
                          ' #Table16 tr:nth-child(1) td:nth-child(3)::text').extract())

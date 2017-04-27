@@ -37,10 +37,6 @@ class CjrbSpider(CrawlSpider):
     custom_settings = {
         'CONCURRENT_REQUESTS': 1,
         'DOWNLOAD_DELAY': 1.6,  # 间隔时间
-        'SPIDER_MIDDLEWARES': {
-            'auto_news.middlewares.EmptyCookiesMiddleware': 500,
-            'auto_news.middlewares.StartJVMMiddleware': 600,
-        },
         'ITEM_PIPELINES': {
             # 'auto_news.pipelines.DropEmptyDetailItemPipeline': 100,
             'auto_news.pipelines.RemoveDuplicatePipeline': 200,

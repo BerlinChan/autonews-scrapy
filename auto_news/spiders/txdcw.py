@@ -55,10 +55,6 @@ class TxdcwSpider(CrawlSpider):
     custom_settings = {
         'CONCURRENT_REQUESTS': 5,
         'DOWNLOAD_DELAY': 1,  # 间隔时间
-        'SPIDER_MIDDLEWARES': {
-            'auto_news.middlewares.EmptyCookiesMiddleware': 500,
-            'auto_news.middlewares.StartJVMMiddleware': 600,
-        },
         'ITEM_PIPELINES': {
             'auto_news.pipelines.RemoveDuplicatePipeline': 200,
             'auto_news.pipelines.SocketOnNewsAdded': 300,
@@ -70,27 +66,46 @@ class TxdcwSpider(CrawlSpider):
     }
 
     def parse_detail_item(self, response):
+        if response.css('body#P-QQ div#Main-P-QQ::text').extract_first() is not None:
+            # 大图模版
+            self.parse_hd_img_template(response)
+        else:
+            item = NewsDetailItem()
+            item["_id"] = ObjectId()
+            item["title"] = response.css('.main .hd h1::text').extract_first()
+            item["subTitle"] = ''
+            item["category"] = response.css('.color-a-0 a::text').extract_first()
+            item["url"] = response.url.lower()
+
+            item["content"] = ''.join(response.css('.main .bd #Cnt-Main-Article-QQ p').extract())
+            item["articleSource"] = response.css('.main .color-a-1::text').extract_first()
+            item["authorName"] = response.css('.main .hd .tit-bar .color-a-3::text').extract_first() or ''
+            editorName = response.css('.main .ft .QQeditor::text').extract_first()
+            item["editorName"] = '' if len(editorName) == 0 else editorName[1: -1]
+            item["date"] = arrow.get(response.css('.main .hd .tit-bar .article-time::text').extract_first() + ' 08:00',
+                                     'YYYY-MM-DD HH:mm ZZ').isoformat()
+            item["crawledDate"] = datetime.utcnow().isoformat()
+            item["origin_key"] = 'txdcw'
+            item["origin_name"] = '腾讯大楚网'
+
+            return item
+
+    def parse_hd_img_template(self, response):
         item = NewsDetailItem()
         item["_id"] = ObjectId()
-        item["title"] = response.css('#Table17 tr:nth-child(1) td::text').extract_first()
-        item["subTitle"] = ''.join(
-            response.css('#Table17 tr:nth-child(2) td::text,'
-                         ' #Table17 tr:nth-child(3) td::text').extract())
-        item["category"] = ''.join(
-            response.css('#Table16 tr:nth-child(1) td:nth-child(1)::text ,'
-                         ' #Table16 tr:nth-child(1) td:nth-child(3)::text').extract())
+        item["title"] = response.css('.main#Main-P-QQ .title h1::text').extract_first()
+        item["subTitle"] = ''
+        item["category"] = ''
         item["url"] = response.url.lower()
 
-        all_img = response.css('#copytext img').extract()
-        all_img = list(
-            map(lambda i: re.sub(r"src=\"/(.+\.jpg)\"", "src=\"" + response.urljoin(r"../../../\1") + "\"", i),
-                all_img))
-        item["content"] = ''.join(all_img) + response.css('#copytext font').extract_first()
+        all_img = response.css('.main#Main-P-QQ #Main-A #picWrap img').extract()
+        item["content"] = ''.join(all_img + response.css('.main#Main-P-QQ #InfoWrap #infoTxtWrap #infoTxt').extract())
         item["articleSource"] = ''
-        item["authorName"] = ''
-        item["editorName"] = ''
-        item["date"] = arrow.get(re.search(r'/(\d{8})/', response.url).group(1) + ' 08:00',
-                                 'YYYYMMDD ZZ').isoformat()
+        item["authorName"] = response.css('.main#Main-P-QQ .hd .tit-bar .color-a-3::text').extract_first() or ''
+        item["editorName"] = response.css('.main#Main-P-QQ .ft .QQeditor::text').extract_first()
+        dateStr = response.css(
+            '.main#Main-P-QQ #InfoWrap #infoTxtWrap #time_source span:nth-child(1)::text').extract_first()
+        item["date"] = '' if dateStr is None else arrow.get(dateStr + ' 08:00', 'YYYY-MM-DD HH:mm ZZ').isoformat()
         item["crawledDate"] = datetime.utcnow().isoformat()
         item["origin_key"] = 'txdcw'
         item["origin_name"] = '腾讯大楚网'

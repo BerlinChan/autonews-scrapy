@@ -28,6 +28,7 @@ DUPEFILTER_DEBUG = False
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {
     # 'auto_news.middlewares.AutoNewsSpiderMiddleware': 543,
+    'auto_news.middlewares.EmptyCookiesMiddleware': 500,
     'auto_news.middlewares.StartJVMMiddleware': 600,
 }
 

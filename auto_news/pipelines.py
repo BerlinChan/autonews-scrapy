@@ -59,7 +59,7 @@ class SocketOnNewsAdded(object):
 
     def process_item(self, item, spider):
         # 发送到websocket服务
-        send_title = ('' if item['title'] is None else item['title']) + \
+        send_title = ('' if item['title'] is None else item['title'] + ' ') + \
                      ('' if item['subTitle'] is None else item['subTitle'])
         print(item['origin_name'] + ': ' + send_title)
         if isinstance(item, NewsListItem):
