@@ -121,7 +121,7 @@ class NLPSentimentPipeline(object):
             pass
         elif isinstance(item, NewsDetailItem):
             content_text = BeautifulSoup(item['content'], "lxml").get_text()
-            if content_text is not None:
+            if content_text is not None and len(content_text) > 0:
                 item['nlpSentiment'] = SnowNLP(content_text).sentiments
 
         return item

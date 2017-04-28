@@ -53,8 +53,8 @@ class TxdcwSpider(CrawlSpider):
              process_links='process_next_page_links', follow=True),
     ]
     custom_settings = {
-        'CONCURRENT_REQUESTS': 5,
-        'DOWNLOAD_DELAY': 1,  # 间隔时间
+        'CONCURRENT_REQUESTS': 8,
+        # 'DOWNLOAD_DELAY': 1,  # 间隔时间
         'ITEM_PIPELINES': {
             'auto_news.pipelines.RemoveDuplicatePipeline': 200,
             'auto_news.pipelines.SocketOnNewsAdded': 300,
@@ -81,7 +81,7 @@ class TxdcwSpider(CrawlSpider):
             item["articleSource"] = response.css('.main .color-a-1::text').extract_first()
             item["authorName"] = response.css('.main .hd .tit-bar .color-a-3::text').extract_first() or ''
             editorName = response.css('.main .ft .QQeditor::text').extract_first()
-            item["editorName"] = '' if len(editorName) == 0 else editorName[1: -1]
+            item["editorName"] = '' if editorName is None else editorName[1: -1]
             item["date"] = arrow.get(response.css('.main .hd .tit-bar .article-time::text').extract_first() + ' 08:00',
                                      'YYYY-MM-DD HH:mm ZZ').isoformat()
             item["crawledDate"] = datetime.utcnow().isoformat()

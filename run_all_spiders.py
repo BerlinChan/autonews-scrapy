@@ -17,10 +17,10 @@ def crawl():
     #     yield runner.crawl(spider_name)
 
     # yield runner.crawl('rmw_hb')
-    # yield runner.crawl('rmw_hb_detail')
-    # yield runner.crawl('hbrb')
-    # yield runner.crawl('cjrb')
-    yield runner.crawl('txdcw')
+    yield runner.crawl('rmw_hb_detail')  # 人民网-湖北频道
+    yield runner.crawl('hbrb')  # 湖北日报系
+    yield runner.crawl('cjrb')  # 长江日报系
+    yield runner.crawl('txdcw')  # 腾讯大楚网-新闻
     reactor.stop()
 
 
