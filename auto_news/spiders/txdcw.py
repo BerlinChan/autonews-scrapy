@@ -42,15 +42,20 @@ class TxdcwSpider(CrawlSpider):
         'http://hb.qq.com/l/jm/jmyw/jmtt/list2015015104550.htm',  # 荆门-新闻列表
         'http://hb.qq.com/l/jz/jzyw/jzywlist.htm',  # 荆州-新闻列表
         'http://hb.qq.com/l/xt/xtyw/list20160127112918.htm',  # 仙桃-新闻列表
-        # 'http://hb.qq.com/l/sy/synews/shiyan-news-list.htm',  # 十堰-新闻列表
+        'http://hb.qq.com/l/sy/synews/shiyan-news-list.htm',  # 十堰-新闻列表
     ]
     rules = [
-        Rule(LinkExtractor(allow='\d{8}/\d{6}\.htm$',
-                           restrict_css='.newslist li'),
+        Rule(LinkExtractor(allow='\d{8}/\d{6}\.htm$', restrict_css='.newslist li'),
              callback='parse_detail_item'),
         Rule(LinkExtractor(allow='.+\.htm$',
                            restrict_css='.newslist+ .pageNav a:last-child'),
-             process_links='process_next_page_links', follow=True),
+             process_links='process_next_page_links', follow=False),  # 不爬取下一页
+        # 十堰列表
+        Rule(LinkExtractor(allow='\d{8}/\d{6}\.htm$', restrict_css='.line_h_25 li'),
+             callback='parse_detail_item'),
+        Rule(LinkExtractor(allow='.+\.htm$',
+                           restrict_css='.box_hr16+ .pageNav a:last-child'),
+             process_links='process_next_page_links', follow=False),  # 不爬取下一页
     ]
     custom_settings = {
         'CONCURRENT_REQUESTS': 8,
