@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
-from auto_news.items import NewsDetailItem
+from autonews.items import NewsDetailItem
 from bson.objectid import ObjectId
 import arrow
 from datetime import datetime
@@ -51,13 +51,13 @@ class HbrbSpider(CrawlSpider):
         'CONCURRENT_REQUESTS': 1,
         'DOWNLOAD_DELAY': 1.6,  # 间隔时间
         'ITEM_PIPELINES': {
-            # 'auto_news.pipelines.DropEmptyDetailItemPipeline': 100,
-            'auto_news.pipelines.RemoveDuplicatePipeline': 200,
-            'auto_news.pipelines.SocketOnNewsAdded': 300,
-            'auto_news.pipelines.NLPKeywordPipeline': 350,
-            'auto_news.pipelines.NLPClassifyPipeline': 360,
-            'auto_news.pipelines.NLPSentimentPipeline': 370,
-            'auto_news.pipelines.InsertItemPipeline': 400,
+            # 'autonews.pipelines.DropEmptyDetailItemPipeline': 100,
+            'autonews.pipelines.RemoveDuplicatePipeline': 200,
+            'autonews.pipelines.SocketOnNewsAdded': 300,
+            'autonews.pipelines.NLPKeywordPipeline': 350,
+            'autonews.pipelines.NLPClassifyPipeline': 360,
+            'autonews.pipelines.NLPSentimentPipeline': 370,
+            'autonews.pipelines.InsertItemPipeline': 400,
         }
     }
 

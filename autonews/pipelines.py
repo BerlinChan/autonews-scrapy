@@ -9,7 +9,7 @@ import pymongo
 from bson.objectid import ObjectId
 from requests import request
 import json
-from auto_news.items import NewsDetailItem, NewsListItem
+from autonews.items import NewsDetailItem, NewsListItem
 from scrapy.exceptions import DropItem
 from dateutil import parser
 from snownlp import SnowNLP

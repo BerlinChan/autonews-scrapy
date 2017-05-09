@@ -11,11 +11,11 @@ from jpype import *
 # 全局 scrapy 启动时 startJVM
 startJVM(getDefaultJVMPath(),
          "-Djava.class.path="
-         "./auto_news/lib/hanlp-1.3.2/hanlp-1.3.2.jar:"
-         "./auto_news/lib/hanlp-1.3.2/:"
-         "./auto_news/lib/THUCTC_java_v1/liblinear-1.8.jar:"
-         "./auto_news/lib/THUCTC_java_v1/THULAC_java_v1.jar:"
-         "./auto_news/lib/THUCTC_java_v1/",
+         "./autonews/lib/hanlp-1.3.2/hanlp-1.3.2.jar:"
+         "./autonews/lib/hanlp-1.3.2/:"
+         "./autonews/lib/THUCTC_java_v1/liblinear-1.8.jar:"
+         "./autonews/lib/THUCTC_java_v1/THULAC_java_v1.jar:"
+         "./autonews/lib/THUCTC_java_v1/",
          "-Xms1g", "-Xmx1g")  # 启动JVM，Linux需替换分号;为冒号:
 HanLP = JClass('com.hankcs.hanlp.HanLP')
 
@@ -23,7 +23,7 @@ BasicTextClassifier = JClass('org.thunlp.text.classifiers.BasicTextClassifier')
 # 新建分类器对象
 classifier = BasicTextClassifier()
 # 设置分类种类，并读取模型
-defaultArguments = "-l ./auto_news/lib/THUCTC_java_v1/news_model/"
+defaultArguments = "-l ./autonews/lib/THUCTC_java_v1/news_model/"
 classifier.Init(defaultArguments.split(" "))
 classifier.runAsBigramChineseTextClassifier()
 

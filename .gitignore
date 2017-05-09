@@ -4,6 +4,6 @@
 /logs/
 /project.egg-info/
 /dbs/
-/auto_news/lib/hanlp-1.3.2/data/
-/auto_news/lib/THUCTC_java_v1/news_model/
-/auto_news/lib/THUCTC_java_v1/dbs/
+/autonews/lib/hanlp-1.3.2/data/
+/autonews/lib/THUCTC_java_v1/news_model/
+/autonews/lib/THUCTC_java_v1/dbs/

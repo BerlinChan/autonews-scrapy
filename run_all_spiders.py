@@ -5,7 +5,7 @@ from scrapy.utils.project import get_project_settings
 from scrapy.utils.log import configure_logging
 
 # 必须先加载项目settings配置
-os.environ.setdefault('scrapy_settings_module', 'auto_news.settings')
+os.environ.setdefault('scrapy_settings_module', 'autonews.settings')
 configure_logging(get_project_settings())
 runner = CrawlerRunner(get_project_settings())
 

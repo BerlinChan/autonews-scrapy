@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from bson.objectid import ObjectId
-from auto_news.items import NewsListItem, NewsDetailItem
+from autonews.items import NewsListItem, NewsDetailItem
 import arrow
 
 
@@ -15,9 +15,9 @@ class RmwHbSpider(scrapy.Spider):
     ]
     custom_settings = {
         'ITEM_PIPELINES': {
-            'auto_news.pipelines.RemoveDuplicatePipeline': 200,
-            'auto_news.pipelines.SocketOnNewsAdded': 300,
-            'auto_news.pipelines.InsertItemPipeline': 400,
+            'autonews.pipelines.RemoveDuplicatePipeline': 200,
+            'autonews.pipelines.SocketOnNewsAdded': 300,
+            'autonews.pipelines.InsertItemPipeline': 400,
         }
     }
 

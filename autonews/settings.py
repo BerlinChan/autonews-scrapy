@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for auto_news project
+# Scrapy settings for autonews project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,10 +9,10 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'auto_news'
+BOT_NAME = 'autonews'
 
-SPIDER_MODULES = ['auto_news.spiders']
-NEWSPIDER_MODULE = 'auto_news.spiders'
+SPIDER_MODULES = ['autonews.spiders']
+NEWSPIDER_MODULE = 'autonews.spiders'
 
 HTTP_SERVER = 'http://localhost:3090/'
 MONGO_URI = 'mongodb://localhost:27017/'
@@ -21,19 +21,19 @@ MONGO_DATABASE = 'auto-news'
 LOG_ENABLED = True
 LOG_LEVEL = 'WARNING'
 
-DUPEFILTER_CLASS = 'auto_news.filters.SeenURLFilter'
+DUPEFILTER_CLASS = 'autonews.filters.SeenURLFilter'
 DUPEFILTER_DEBUG = False
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {
-    # 'auto_news.middlewares.AutoNewsSpiderMiddleware': 543,
-    'auto_news.middlewares.EmptyCookiesMiddleware': 500,
-    'auto_news.middlewares.StartJVMMiddleware': 600,
+    # 'autonews.middlewares.AutoNewsSpiderMiddleware': 543,
+    'autonews.middlewares.EmptyCookiesMiddleware': 500,
+    'autonews.middlewares.StartJVMMiddleware': 600,
 }
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'auto_news (+http://www.yourdomain.com)'
+# USER_AGENT = 'autonews (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -64,7 +64,7 @@ ROBOTSTXT_OBEY = True
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 # DOWNLOADER_MIDDLEWARES = {
-#    'auto_news.middlewares.MyCustomDownloaderMiddleware': 543,
+#    'autonews.middlewares.MyCustomDownloaderMiddleware': 543,
 # }
 
 # Enable or disable extensions
@@ -76,7 +76,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 # ITEM_PIPELINES = {
-#     'auto_news.pipelines.SocketOnNewsAdded': 300,
+#     'autonews.pipelines.SocketOnNewsAdded': 300,
 # }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

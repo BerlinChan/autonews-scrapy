@@ -5,7 +5,7 @@ FROM python:3.6.1
 WORKDIR /
 
 # Copy the current directory contents into the container at /app
-ADD ./auto_news /auto_news
+ADD ./autonews /autonews
 ADD ./requirements.txt /
 ADD ./scrapy.cfg /
 ADD ./scrapy_scheduler.py /
@@ -17,7 +17,7 @@ RUN pip install -r requirements.txt
 #EXPOSE 80
 
 # Define environment variable
-ENV NAME auto-news-scrapy
+ENV NAME autonews-scrapy
 
 # Run app.py when the container launches
 CMD ["python", "scrapy_scheduler.py"]
