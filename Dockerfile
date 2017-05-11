@@ -5,16 +5,16 @@ FROM python:3.6.1
 WORKDIR /autonews
 
 # Copy the current directory contents into the container at /app
-ADD ./autonews /autonews
+ADD ./autonews /autonews/autonews
 ADD ./requirements.txt /autonews
 ADD ./scrapy.cfg /autonews
 ADD ./scrapy_scheduler.py /autonews
 
 # install java
-RUN chmod +x /autonews/lib/jdk-6u45-linux-x64.bin
-RUN /autonews/lib/jdk-6u45-linux-x64.bin
+RUN chmod +x /autonews/autonews/lib/jdk-6u45-linux-x64.bin
+RUN /autonews/autonews/lib/jdk-6u45-linux-x64.bin
 RUN mv jdk1.6.0_45 /opt/
-RUN rm /autonews/lib/jdk-6u45-linux-x64.bin
+RUN rm /autonews/autonews/lib/jdk-6u45-linux-x64.bin
 RUN update-alternatives --install /usr/bin/java java /opt/jdk1.6.0_45/bin/java 100
 
 # Define environment variable
@@ -28,4 +28,4 @@ RUN pip install -r requirements.txt -i http://pypi.douban.com/simple --trusted-h
 #EXPOSE 80
 
 # Run app.py when the container launches
-CMD ["python", "./autonews/scrapy_scheduler.py"]
+CMD ["python", "./scrapy_scheduler.py"]

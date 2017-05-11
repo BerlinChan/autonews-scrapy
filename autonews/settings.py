@@ -14,8 +14,8 @@ BOT_NAME = 'autonews'
 SPIDER_MODULES = ['autonews.spiders']
 NEWSPIDER_MODULE = 'autonews.spiders'
 
-HTTP_SERVER = 'http://localhost:3090/'
-MONGO_URI = 'mongodb://localhost:27017/'
+HTTP_SERVER = 'http://10.0.75.1:3090/'  # local IP for MAC, vEthernet IPv4 for Win
+MONGO_URI = 'mongodb://10.0.75.1:27017/'
 MONGO_DATABASE = 'auto-news'
 
 LOG_ENABLED = True
