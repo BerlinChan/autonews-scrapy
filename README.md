@@ -17,3 +17,9 @@
 
 ## 使用scrapyd
 - 命令`scrapyd`启动 scrapyd，默认在[localhost:6800](http://localhost:6800/)建立监控界面
+
+## Build docker image
+- lib目录下放置[jdk-6u45-linux-x64.bin](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase6-419409.html#jre-6u45-oth-JPR)
+- lib目录下放置[hanlp model]()
+- lib目录下放置[THUCTC model]()
+- docker build -t autonews-scrapy .
