@@ -11,11 +11,10 @@ ADD ./scrapy.cfg /autonews
 ADD ./scrapy_scheduler.py /autonews
 
 # install java
-ADD ./autonews/lib/jdk-6u45-linux-x64.bin /opt/
-RUN chmod +x /opt/jdk-6u45-linux-x64.bin
-RUN /opt/jdk-6u45-linux-x64.bin
+RUN chmod +x /autonews/lib/jdk-6u45-linux-x64.bin
+RUN /autonews/lib/jdk-6u45-linux-x64.bin
 RUN mv jdk1.6.0_45 /opt/
-RUN rm /opt/jdk-6u45-linux-x64.bin
+RUN rm /autonews/lib/jdk-6u45-linux-x64.bin
 RUN update-alternatives --install /usr/bin/java java /opt/jdk1.6.0_45/bin/java 100
 
 # Define environment variable
