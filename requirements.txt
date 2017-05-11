@@ -1,4 +1,5 @@
 scrapy
+requests
 pymongo
 arrow
 scrapyd
