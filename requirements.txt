@@ -2,6 +2,7 @@ scrapy
 requests
 pymongo
 arrow
+bs4
 scrapyd
 scrapyd-client
 apscheduler
