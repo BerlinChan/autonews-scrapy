@@ -15,7 +15,7 @@ SPIDER_MODULES = ['autonews.spiders']
 NEWSPIDER_MODULE = 'autonews.spiders'
 
 HTTP_SERVER = 'http://localhost:3090/'  # localhost for local, <autonews-api-container> for link to API container
-MONGO_URI = 'mongodb://localhost:27017/'
+MONGO_URI = 'mongodb://localhost:27017/'  # vEthernet for docker container
 MONGO_DATABASE = 'auto-news'
 
 LOG_ENABLED = True
