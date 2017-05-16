@@ -14,8 +14,8 @@ BOT_NAME = 'autonews'
 SPIDER_MODULES = ['autonews.spiders']
 NEWSPIDER_MODULE = 'autonews.spiders'
 
-HTTP_SERVER = 'http://autonews-api-container:3090/'  # localhost for local, <autonews-api-container> for link to API container
-MONGO_URI = 'mongodb://10.0.75.1:27017/'
+HTTP_SERVER = 'http://localhost:3090/'  # localhost for local, <autonews-api-container> for link to API container
+MONGO_URI = 'mongodb://localhost:27017/'
 MONGO_DATABASE = 'auto-news'
 
 LOG_ENABLED = True
