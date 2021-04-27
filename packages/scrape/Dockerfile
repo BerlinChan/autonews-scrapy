@@ -1,5 +1,5 @@
 # Use an official Python runtime as a base image
-FROM python:3.6.1
+FROM python:3.9.4
 
 # Set the working directory to /app
 WORKDIR /autonews
