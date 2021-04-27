@@ -1,10 +1,6 @@
-/.idea/
-/eggs/
-/build/
-/logs/
-/project.egg-info/
-/dbs/
-/autonews/lib/hanlp-1.3.2/data/
-/autonews/lib/THUCTC_java_v1/news_model/
-/autonews/lib/THUCTC_java_v1/dbs/
-/autonews/lib/jdk-6u45-linux-x64.bin
+.DS_STORE
+*.log
+npm-debug.log*
+
+/node_modules
+/dist

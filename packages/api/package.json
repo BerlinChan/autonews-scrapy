@@ -1,0 +1,29 @@
+{
+  "name": "autonews-api",
+  "version": "0.3.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "kcors": "^1.3.2",
+    "koa": "^2.0.1",
+    "koa-compress": "^2.0.0",
+    "koa-conditional-get": "^2.0.0",
+    "koa-etag": "^3.0.0",
+    "koa-route": "^3.2.0",
+    "koa-socket": "^4.4.0",
+    "koa-static": "^3.0.0",
+    "moment": "^2.18.1",
+    "monk": "^4.0.0",
+    "prop-types": "^15.5.10",
+    "raw-body": "^2.2.0"
+  },
+  "devDependencies": {
+    "colors": "^1.1.2",
+    "koa-convert": "^1.2.0"
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "name": "autonews-client",
+  "version": "1.0.0",
+  "description": "Get started with React, Redux, and React-Router!",
+  "main": "index.js",
+  "engines": {
+    "node": ">=4.2.0",
+    "npm": "^3.0.0"
+  },
+  "scripts": {
+    "clean": "rimraf ../public",
+    "compile": "better-npm-run compile",
+    "lint": "eslint src tests server",
+    "lint:fix": "npm run lint -- --fix",
+    "start": "better-npm-run start",
+    "dev": "better-npm-run dev",
+    "dev:no-debug": "npm run dev -- --no_debug",
+    "test": "better-npm-run test",
+    "test:dev": "npm run test -- --watch",
+    "deploy": "better-npm-run deploy",
+    "deploy:dev": "better-npm-run deploy:dev",
+    "deploy:prod": "better-npm-run deploy:prod",
+    "codecov": "cat coverage/*/lcov.info | codecov"
+  },
+  "betterScripts": {
+    "compile": {
+      "command": "babel-node bin/compile",
+      "env": {
+        "DEBUG": "app:*"
+      }
+    },
+    "dev": {
+      "command": "nodemon --exec babel-node bin/server",
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "app:*"
+      }
+    },
+    "deploy": {
+      "command": "npm run clean && npm run compile",
+      "env": {
+        "DEBUG": "app:*"
+      }
+    },
+    "deploy:dev": {
+      "command": "npm run deploy",
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "app:*"
+      }
+    },
+    "deploy:prod": {
+      "command": "npm run deploy",
+      "env": {
+        "NODE_ENV": "production",
+        "DEBUG": "app:*"
+      }
+    },
+    "start": {
+      "command": "babel-node bin/server",
+      "env": {
+        "DEBUG": "app:*"
+      }
+    },
+    "test": {
+      "command": "babel-node ./node_modules/karma/bin/karma start build/karma.conf",
+      "env": {
+        "NODE_ENV": "test",
+        "DEBUG": "app:*"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Berlin",
+  "license": "MIT",
+  "dependencies": {
+    "antd": "^2.10.1",
+    "babel-cli": "^6.5.1",
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-polyfill": "^6.9.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.3.13",
+    "babel-register": "^6.18.0",
+    "babel-runtime": "^6.18.0",
+    "better-npm-run": "0.0.15",
+    "css-loader": "^0.28.0",
+    "cssnano": "^3.8.1",
+    "debug": "^2.3.3",
+    "es6-promise": "^4.1.0",
+    "extract-text-webpack-plugin": "^1.0.0",
+    "file-loader": "^0.10.1",
+    "fixed-data-table-2": "^0.7.13",
+    "fs-extra": "^2.1.2",
+    "history": "^3.0.0",
+    "html-webpack-plugin": "^2.24.1",
+    "immutable": "^3.8.1",
+    "imports-loader": "^0.7.1",
+    "ip": "^1.1.4",
+    "json-loader": "^0.5.4",
+    "koa": "^2.0.0-alpha.3",
+    "koa-connect-history-api-fallback": "^0.3.1",
+    "koa-convert": "^1.2.0",
+    "koa-proxy": "^0.8.0",
+    "koa-static": "^3.0.0",
+    "moment": "^2.18.1",
+    "node-sass": "^4.5.2",
+    "normalize.css": "^6.0.0",
+    "postcss-loader": "^1.3.3",
+    "rc-tree": "^1.4.0",
+    "react": "^15.4.1",
+    "react-addons-css-transition-group": "^15.4.1",
+    "react-cookie": "^1.0.5",
+    "react-dimensions": "^1.3.0",
+    "react-dom": "^15.4.1",
+    "react-grid-layout": "^0.14.4",
+    "react-redux": "^5.0.3",
+    "react-router": "^3.0.2",
+    "react-router-redux": "^4.0.7",
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.6.0",
+    "redux-form": "^6.6.1",
+    "redux-saga": "^0.14.4",
+    "redux-socket.io": "^1.3.1",
+    "resolve-url-loader": "^2.0.2",
+    "rimraf": "^2.5.4",
+    "sass-loader": "^6.0.3",
+    "sortablejs": "^1.5.1",
+    "style-loader": "^0.16.1",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.13.3",
+    "whatwg-fetch": "^2.0.3",
+    "yargs": "^7.0.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.1",
+    "babel-plugin-import": "^1.1.0",
+    "chai": "^3.4.1",
+    "chai-as-promised": "^6.0.0",
+    "chai-enzyme": "^0.6.1",
+    "codecov": "^1.0.1",
+    "enzyme": "^2.8.0",
+    "eslint": "^3.18.0",
+    "eslint-config-standard": "^7.1.0",
+    "eslint-config-standard-react": "^4.0.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^6.8.0",
+    "eslint-plugin-standard": "^2.0.0",
+    "isparta-loader": "^2.0.0",
+    "karma": "^1.0.0",
+    "karma-coverage": "^1.0.0",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.3",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-webpack-with-fast-source-maps": "^1.9.2",
+    "mocha": "^3.2.0",
+    "nodemon": "^1.10.2",
+    "phantomjs-prebuilt": "^2.1.12",
+    "react-addons-test-utils": "^15.4.1",
+    "redbox-react": "^1.3.3",
+    "sinon": "^1.17.5",
+    "sinon-chai": "^2.8.0",
+    "webpack-dev-middleware": "^1.8.4",
+    "webpack-hot-middleware": "^2.13.2"
+  }
+}

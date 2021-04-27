@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+.monitor {
+  .layoutContent {
+    > div {
+      z-index: 1;
+    }
+    > span {
+      z-index: 2;
+    }
+  }
+}

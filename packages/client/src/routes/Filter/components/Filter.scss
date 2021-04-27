@@ -1,0 +1,21 @@
+.filter {
+  margin: 12px;
+  ul.list {
+    li {
+      cursor: move;
+      padding: 5px 0;
+      > div {
+        display: inline-block;
+      }
+      &:nth-child(odd) {
+        background-color: #eee;
+      }
+      &:nth-child(even) {
+        background-color: #fff;
+      }
+      & + li {
+        margin-top: 5px;
+      }
+    }
+  }
+}
