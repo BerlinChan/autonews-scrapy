@@ -20,9 +20,7 @@
     "moment": "^2.18.1",
     "monk": "^4.0.0",
     "prop-types": "^15.5.10",
-    "raw-body": "^2.2.0"
-  },
-  "devDependencies": {
+    "raw-body": "^2.2.0",
     "colors": "^1.1.2",
     "koa-convert": "^1.2.0"
   }
