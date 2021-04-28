@@ -1,0 +1,80 @@
+.about {
+  margin: 12px;
+  p {
+    text-indent: 2em;
+  }
+  .header {
+    @extend .clearfix;
+    .img {
+      margin-top: 26px;
+      text-align: center;
+      float: left;
+      width: 30%;
+    }
+    .content {
+      float: left;
+      width: 70%;
+      ul {
+        list-style: disc;
+        margin-left: 50px;
+      }
+    }
+  }
+  .block {
+    h3 {
+      font-size: 16px;
+    }
+    hr {
+      margin-bottom: 12px;
+    }
+    &.origin {
+      ul {
+        list-style: disc;
+        position: relative;
+        li {
+          padding: 2px 4px;
+          display: inline-block;
+          margin-left: 18px;
+          margin-bottom: 10px;
+        }
+      }
+    }
+    &.future {
+    }
+    &.why {
+      i.iconLove {
+        vertical-align: middle;
+        width: 14px;
+        height: 14px;
+        display: inline-block;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAPCAMAAADarb8dAAAAZlBMVEUAAAD/Bwf/Bgb/Bgb/BAT/Bwf/Bgb/Bgb/Bwf/Bwf/BQX/Bwf/Bgb/BQX/Bgb/BQX/Bgb/BQX/BAT/BAT/Bgb/CAj/Bgb/Bwf/CAj/Bwf/BQX/Bgb/BQX/BAT/Bwf/AwP/BQX/BwdyG9tKAAAAIXRSTlMA0MCYBeke5N/MxryphH91MSkjGBTd1K2jjWZQSjkODg2xT8wMAAAAbklEQVQI112O1w6DMBTFnEFYZdPdMv7/J0nYwS9HthLpQlvIWJVQveMkN9DI0RL8/pFbUZPbcSVcViFGjzuhH4Lri4iXH1K+fvigb2eXPZjk8EcFUMvNRclMu/5KDSudcv5s2NGZPXqAUykyzcwESvoUBrGItL8AAAAASUVORK5CYII=");
+      }
+    }
+    &.releaseNote {
+      ul.releaseNoteList {
+        > li {
+          margin: 20px 0;
+          ul {
+            margin-left: 30px;
+            list-style: disc;
+            li {
+            }
+          }
+        }
+      }
+    }
+    & + .block {
+      margin-top: 24px;
+    }
+  }
+}
+
+.clearfix:after {
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+  content: ".";
+}

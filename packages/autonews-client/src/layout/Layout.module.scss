@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+.header {
+  z-index: 3;
+  position: fixed;
+  width: 100%;
+  .logo {
+    font-size: 18px;
+    float: left;
+    line-height: 62px;
+    margin-right: 10px;
+    .logoTitle {
+      color: #49a9ee;
+      font-size: 18px;
+    }
+    img {
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+  }
+  .horizontalMenu {
+    .menu {
+      line-height: 64px;
+      font-size: 14px;
+    }
+  }
+  .verticalMenu {
+    display: none;
+  }
+}
+
+.content {
+  z-index: 1;
+  margin: 64px 0 26px 0;
+}
+
+.footer {
+  z-index: 2;
+  text-align: right;
+  font-size: 12px;
+  padding: 1px 6px;
+  background-color: #fff;
+  color: #aaa;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  .warning {
+    color: #e66;
+  }
+}
