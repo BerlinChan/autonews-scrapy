@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchGetApiCallExample,
   fetchPostApiCallExample,
-} from "src/store/actions/exampleAction";
+} from "src/store/actions/rootAction";
 import { GET_JSON_PLACEHOLDER_URL } from "src/shared/constants/urls";
 import FetchSendRequest from "src/shared/services/fetchSendRequestService";
 
@@ -54,7 +54,7 @@ const CheckApiCall = () => {
   };
   return (
     <div style={{ paddingLeft: 16 }}>
-      <h4 className="fix-header">Normal API call</h4>
+      <h2 className="fix-header">Normal API call</h2>
       {isSuccess && <p>Normal API call success. go to Network</p>}
       <div className="api-box">
         <button onClick={getNormalAPICall}>GET NORMAL API CALL</button>

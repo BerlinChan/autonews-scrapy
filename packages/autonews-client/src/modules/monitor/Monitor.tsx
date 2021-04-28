@@ -1,25 +1,23 @@
+import { useSelector, useDispatch } from "react-redux";
 import cls from "./Monitor.module.scss";
 import "react-resizable/css/styles.css";
 import { Responsive, WidthProvider } from "react-grid-layout";
+import { setLayouts, setFilteredList } from "src/store/actions/rootAction";
+import MonitorCard from "./MonitorCard/MonitorCard";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 type Props = {
   monitor: any;
   global: any;
-  setLayouts: any;
-  setFilteredList: any;
   newsList: object;
 };
 
-const MonitorComponent = ({
-  monitor,
-  global,
-  setLayouts,
-  setFilteredList,
-  newsList,
-}: Props) => {
+const MonitorComponent = ({ monitor, global, newsList }: Props) => {
   // const gridLayoutConfig = global.gridLayoutConfig;
+  const dispatch = useDispatch();
+  const store = useSelector((state: any) => state.homeData);
+  console.log("🚀 ~ file: Monitor.tsx ~ line 26 ~ store", store);
 
   return (
     <div className={cls.monitor}>
@@ -27,26 +25,26 @@ const MonitorComponent = ({
       <ResponsiveReactGridLayout
         className={cls.rowMargin}
         draggableHandle=".move-cursor"
-        // layouts={global.userSetting.layouts}
-        // breakpoints={gridLayoutConfig.breakpoints}
-        // cols={gridLayoutConfig.gridCols}
-        onLayoutChange={(layout, layouts) => setLayouts(layouts)}
+        layouts={store.userSetting.layouts}
+        breakpoints={store.gridLayoutConfig.breakpoints}
+        cols={store.gridLayoutConfig.gridCols}
+        onLayoutChange={(layout, layouts) => dispatch(setLayouts(layouts))}
       >
-        {/* {global.userSetting.originKeys.map((item, index) => {
+        {store.userSetting.originKeys.map((item: any, index: any) => {
           return (
-            <div key={item} className={cls.layoutContent}>
+            <div key={index} className={cls.layoutContent}>
               <MonitorCard
-                {...global.newsList[item]}
+                {...store.newsList[item]}
                 origin_key={item}
-                filteredList={global.filteredList}
+                filteredList={store.filteredList}
                 setFilteredList={setFilteredList}
                 showSentimentInspector={
-                  global.userSetting.showSentimentInspector
+                  store.userSetting.showSentimentInspector
                 }
               />
             </div>
           );
-        })} */}
+        })}
       </ResponsiveReactGridLayout>
     </div>
   );

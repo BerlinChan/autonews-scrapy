@@ -1,7 +1,7 @@
 import { combineReducers, Reducer } from "redux";
 import apiCallSaga from "./sagas/apiCallSaga";
 import { fork, all } from "redux-saga/effects";
-import exampleReducer from "./reducer/exampleReducer";
+import rootReducer from "./reducer/rootReducer";
 import { FakeDataModal } from "./models/actionModel";
 
 export interface RootState {
@@ -12,7 +12,7 @@ export interface RootState {
 export const createRootReducer = (): Reducer<any> =>
   combineReducers({
     // userDetails: userDetailsReducerFileImport
-    homeData: exampleReducer,
+    homeData: rootReducer,
   });
 
 export function* rootSaga(): Generator {

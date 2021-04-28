@@ -1,15 +1,9 @@
-/**
- * Created by Berlin Local on 2017/3/6.
- * 伺服 Web Client 的 http 服务器
- * 承载 static file 与 API
- */
-
 const Koa = require('koa');
 const IO = require('koa-socket');
 const cors = require('kcors');
 const route = require('koa-route');
 const rawBody = require('raw-body');
-const config = require('../utils/config');
+const config = require('../config');
 const {getOrigin, getTodayList, pastInquiry, getNewsDetailById, getFilteredList} = require('./DAO');
 const conditional = require('koa-conditional-get');
 const etag = require('koa-etag');
@@ -36,8 +30,9 @@ app.use(require('koa-static')('../public', {index: 'index.html'}));
 // Origin verification generator
 function verifyOrigin(ctx) {
     let validOrigins = [
-        'http://www.berlinchan.com',
+        'https://autonews.berlinchan.com',
         'http://localhost:3091',
+        'http://localhost:4000',
     ];
 
     const origin = ctx.headers.origin;

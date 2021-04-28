@@ -1,0 +1,23 @@
+const ACTION_TYPES = {
+  GET_API_CALL: "GET_API_CALL",
+  GET_API_DATA: "GET_API_DATA",
+  POST_API_CALL: "POST_API_CALL",
+  POST_API_DATA: "POST_API_DATA",
+
+  GLOBAL_SET_USERINFO: "GLOBAL_SET_USERINFO",
+  GLOBAL_USERINFO_FETCH_REQUESTED: "GLOBAL_USERINFO_FETCH_REQUESTED",
+  socket_Global_SET_clientCount: "socket_Global_SET_clientCount",
+  socket_Global_SET_SOCKET_STATUS: "socket_Global_SET_SOCKET_STATUS",
+  socket_global_ON_News_Added: "socket_global_ON_News_Added",
+  GLOBAL_FETCH_origin_REQUESTED: "GLOBAL_FETCH_origin_REQUESTED",
+  GLOBAL_FETCH_origin_SUCCESSED: "GLOBAL_FETCH_origin_SUCCESSED",
+  GLOBAL_FETCH_newsList_REQUESTED: "GLOBAL_FETCH_newsList_REQUESTED",
+  GLOBAL_FETCH_newsList_SUCCESSED: "GLOBAL_FETCH_newsList_SUCCESSED",
+  GLOBAL_FETCH_userSetting_REQUESTED: "GLOBAL_FETCH_userSetting_REQUESTED",
+  GLOBAL_FETCH_userSetting_SUCCESSED: "GLOBAL_FETCH_userSetting_SUCCESSED",
+  GLOBAL_SET_layouts: "GLOBAL_SET_layouts",
+  GLOBAL_SET_filteredList: "GLOBAL_SET_filteredList",
+  GLOBAL_SET_showSentimentInspector: "GLOBAL_SET_showSentimentInspector",
+};
+
+export default ACTION_TYPES;

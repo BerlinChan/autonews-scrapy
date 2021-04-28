@@ -2,7 +2,7 @@
  * Created by Berlin on 2017/3/17.
  */
 
-const config = require('../utils/config');
+const config = require('../config');
 const monk = require('monk');
 const db = monk(config.DB_SERVER);
 const moment = require('moment');

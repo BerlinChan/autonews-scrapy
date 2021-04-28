@@ -5,7 +5,7 @@ const currentDate: Date = new Date();
 const UtilityExample = () => {
   return (
     <div style={{ marginLeft: 16 }}>
-      <h4 className="fix-header">Common Utilities</h4>
+      <h2 className="fix-header">Common Utilities</h2>
 
       <table>
         <thead>

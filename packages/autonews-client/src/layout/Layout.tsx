@@ -9,7 +9,6 @@ const { Header, Content, Footer } = Layout;
 
 const LayoutComponent = ({ children }: RouteConfig): ReactElement => {
   const {pathname} = useLocation();
-  console.log("🚀 ~ file: Layout.tsx ~ line 12 ~ LayoutComponent ~ pathname", pathname)
 
   return (
     <Layout>

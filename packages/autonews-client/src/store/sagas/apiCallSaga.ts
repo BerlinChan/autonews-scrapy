@@ -6,9 +6,9 @@ import {
 import {
   fetchGetApiDataExample,
   fetchPostApiDataExample,
-} from "../actions/exampleAction";
+} from "../actions/rootAction";
 import FetchSendRequest from "src/shared/services/fetchSendRequestService";
-import actionTypes from "../types/exampleTypes";
+import actionTypes from "../types/actionTypes";
 
 const sendRequest = FetchSendRequest.instance;
 

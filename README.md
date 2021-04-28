@@ -1,6 +1,6 @@
 # Autonews
 
-新闻源监控系统(Autonews System)，是一个实时监控、收录新闻更新的工具，主要功能如下：
+新闻源监控(Autonews)，是一个实时监控、收录新闻更新的工具，主要功能如下：
 
 - 准实时监控新闻更新并汇总反应到界面，免除人工值守，反复刷新监控
 - 汇总分散的新闻，提供一处界面总览当日新闻全局，供网络新闻编辑和新闻关注者查阅、筛选、处理
@@ -25,7 +25,7 @@
 
 ## 运行
 - run mongoDB server: `mongod --config /usr/local/etc/mongod.conf`
-- init db: `node utils/dbInit.js`
+- init db: `node tools/dbInit.js`
 - 运行HTTP服务：`node server/index.js`
 - 运行爬虫：参照项目 autonews-scrapy
 - 编译客户端：`npm run deploy:prod`
