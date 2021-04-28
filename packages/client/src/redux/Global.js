@@ -296,7 +296,6 @@ function* watchSetLayouts() {
   }
 }
 
-
 export const sagas = [
   watchFetchUserInfo,
   watchFetchGlobalUserSetting,

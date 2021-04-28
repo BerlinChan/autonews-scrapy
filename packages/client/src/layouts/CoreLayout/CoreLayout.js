@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Layout, Menu, Icon, Dropdown} from 'antd';
 import '../../styles/core.scss'
-import cls from'./CoreLayout.scss'
+import cls from './CoreLayout.scss'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import logoAutoNews from './assets/auto-news-logo.png'
