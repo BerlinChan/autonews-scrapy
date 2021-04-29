@@ -42,13 +42,8 @@ const rootReducer: Reducer<any> = (
   action: AnyAction
 ): any | any => {
   switch (action.type) {
-    case actionTypes.GLOBAL_SET_layouts:
-      return {
-        ...state,
-        postResponseData: action.payload,
-      };
     case actionTypes.GLOBAL_SET_USERINFO:
-      localStorage.setItem('userInfo', action.payload);
+      localStorage.setItem("userInfo", action.payload);
       return {
         ...state,
         userInfo: action.payload,
@@ -65,66 +60,89 @@ const rootReducer: Reducer<any> = (
       };
     case actionTypes.socket_global_ON_News_Added:
       if (state.newsList[action.payload.origin_key]) {
-        let newList = state.newsList[action.payload.origin_key].list ;
+        let newList = state.newsList[action.payload.origin_key].list;
         newList.unshift(action.payload);
-  
+
         return {
           ...state,
-          newsList:{...state.newsList,[action.payload.origin_key]:{
-            ...state.newsList[action.payload.origin_key],
-            list:newList
-          }},
-        }
+          newsList: {
+            ...state.newsList,
+            [action.payload.origin_key]: {
+              ...state.newsList[action.payload.origin_key],
+              list: newList,
+            },
+          },
+        };
       } else {
         return state;
       }
-      [GLOBAL_FETCH_userSetting_SUCCESSED]: (state, action) => {
-        //init newsList
-        const origin = state.get('origin').toJS();
-        let tempNewsList = {};
-        action.userSetting.originKeys.length &&
-        action.userSetting.originKeys.forEach((item, index) => {
-          const currentOriginItem = origin.find(originItem => originItem.key === item);
+    case actionTypes.GLOBAL_FETCH_userSetting_SUCCESSED:
+      const origin = state.origin;
+      let tempNewsList = {};
+      action.userSetting.originKeys.length &&
+        action.userSetting.originKeys.forEach((item: any, index: number) => {
+          const currentOriginItem = origin.find(
+            (originItem: any) => originItem.key === item
+          );
           tempNewsList[item] = {
-            origin_name: currentOriginItem ? currentOriginItem.name : '',
-            list: [], isFetched: false,
+            origin_name: currentOriginItem ? currentOriginItem.name : "",
+            list: [],
+            isFetched: false,
           };
         });
-    
-        return state.set('userSetting', Immutable.fromJS(action.userSetting))
-          .set('newsList', Immutable.fromJS(tempNewsList));
-      },
-      [GLOBAL_FETCH_origin_SUCCESSED]: (state, action) => state.set('origin', Immutable.fromJS(action.data)),
-      [GLOBAL_FETCH_newsList_SUCCESSED]: (state, action) => {
-        let tempList = state.getIn(['newsList', action.origin, 'list']).toJS();
-        tempList = tempList.concat(action.data);
-    
-        return state.setIn(['newsList', action.origin, 'list'], Immutable.fromJS(tempList))
-          .setIn(['newsList', action.origin, 'isFetched'], true);
-      },
-      [GLOBAL_SET_layouts]: (state, action) => {
-        if (action.layouts.md.length) {
-          return state.setIn(['userSetting', 'layouts'], Immutable.fromJS(action.layouts));
-        } else {
-          return state;
-        }
-      },
-      [GLOBAL_SET_filteredList]: (state, action) => {
-        let tempList = state.get('filteredList').toJS();
-        if (tempList.findIndex(i => i === action.item) > -1) {
-          tempList = tempList.filter(i => i !== action.item);
-        }
-        else {
-          tempList.push(action.item);
-        }
-    
-        return state.set('filteredList', Immutable.fromJS(tempList));
-      },
-      [GLOBAL_SET_showSentimentInspector]: (state, action) => {
-        localStorage.setItem('userSetting.showSentimentInspector', action.status);
-    
-        return state.setIn(['userSetting', 'showSentimentInspector'], action.status)
-      },
+
+      return {
+        ...state,
+        userSetting: action.payload.userSetting,
+        newsList: tempNewsList,
+      };
+    case actionTypes.GLOBAL_FETCH_origin_SUCCESSED:
+      return {
+        ...state,
+        origin: action.payload.origin,
+      };
+    case actionTypes.GLOBAL_FETCH_newsList_SUCCESSED:
+      return {
+        ...state,
+        newsList: {
+          ...state.newsList[action.payload.origin],
+          list: state.newsList[action.payload.origin].list.concat(
+            action.payload.data
+          ),
+          isFetched: true,
+        },
+      };
+    case actionTypes.GLOBAL_SET_layouts:
+      if (action.payload.layouts.md.length) {
+        return {
+          ...state,
+          userSetting: {
+            ...state.userSetting,
+            layouts: action.payload.layouts,
+          },
+        };
+      } else {
+        return state;
+      }
+    case actionTypes.GLOBAL_SET_filteredList:
+      let tempList = state.filteredList;
+      if (tempList.findIndex((i: any) => i === action.payload.item) > -1) {
+        tempList = tempList.filter((i: any) => i !== action.payload.item);
+      } else {
+        tempList.push(action.payload.item);
+      }
+
+      return { ...state, filteredList: tempList };
+    case actionTypes.GLOBAL_SET_showSentimentInspector:
+      localStorage.setItem("userSetting.showSentimentInspector", action.status);
+
+      return {
+        ...state,
+        userSetting: {
+          ...state.userSetting,
+          showSentimentInspector: action.payload.status,
+        },
+      };
 
     case actionTypes.GET_API_DATA:
       return {
