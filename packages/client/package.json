@@ -94,7 +94,7 @@
     "debug": "^2.3.3",
     "es6-promise": "^4.1.0",
     "extract-text-webpack-plugin": "^1.0.0",
-    "file-loader": "^0.10.1",
+    "file-loader": "^0.11.0",
     "fixed-data-table-2": "^0.7.13",
     "fs-extra": "^2.1.2",
     "history": "^3.0.0",
