@@ -10668,10 +10668,10 @@ koa-is-json@^1.0.0:
   resolved "https://registry.yarnpkg.com/koa-is-json/-/koa-is-json-1.0.0.tgz#273c07edcdcb8df6a2c1ab7d59ee76491451ec14"
   integrity sha1-JzwH7c3Ljfaiwat9We52SRRR7BQ=
 
-koa-proxy@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/koa-proxy/-/koa-proxy-0.8.0.tgz#c8e832d27d5ea866ce176252584341853cc37b10"
-  integrity sha1-yOgy0n1eqGbOF2JSWENBhTzDexA=
+koa-proxy@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/koa-proxy/-/koa-proxy-0.9.0.tgz#4fd13b0f2eea9be097445bf7b7b4398856a22ef6"
+  integrity sha512-Q6AmOLD7su4EPyUXfGt6TG7/LQ3L5YHzI3DW/yAS1PySpdhESGZ69zAVXr5GyZTbj/CY1hAGSv5l00EJb+n7zA==
   dependencies:
     co-request "^0.2.0"
     iconv-lite "^0.2.11"
