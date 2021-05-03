@@ -4120,10 +4120,10 @@ better-assert@~1.0.0:
   dependencies:
     callsite "1.0.0"
 
-better-npm-run@0.0.15:
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/better-npm-run/-/better-npm-run-0.0.15.tgz#1000ed14b4f77c853de5a5148805f7e74f771cf0"
-  integrity sha1-EADtFLT3fIU95aUUiAX35093HPA=
+better-npm-run@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/better-npm-run/-/better-npm-run-0.1.1.tgz#6bb6008591de1b72554aa8b0cefa0da1572fd481"
+  integrity sha512-SBBYsUsb6bYcUMF9QUWy39GX5kzD4CoRBP11gx/k5jYkUr4Tr+irAokIeQX5FgfCRz0Q27rt8U0J4D2TlRgQFA==
   dependencies:
     commander "^2.9.0"
     dotenv "^2.0.0"
