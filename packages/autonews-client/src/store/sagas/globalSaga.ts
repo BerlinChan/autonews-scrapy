@@ -14,7 +14,7 @@ function* watchFetchUserInfo(): any {
   });
   if (response) {
     yield put(fetchPostApiDataExample(response));
-    yield put({ type: actionTypes.GLOBAL_SET_USERINFO, data: response });
+    yield put({ type: actionTypes.GLOBAL_SET_USERINFO, payload: response });
   }
 }
 function* watchFetchGlobalOrigin(): any {
@@ -28,11 +28,11 @@ function* watchFetchGlobalOrigin(): any {
     if (originList) {
       yield put({
         type: actionTypes.GLOBAL_FETCH_origin_SUCCESSED,
-        data: originList.data.data,
+        payload: originList.data,
       });
       yield put({
         type: actionTypes.GLOBAL_FETCH_userSetting_REQUESTED,
-        origin: originList.data.data,
+        payload: originList.data,
       });
     }
   }
@@ -88,7 +88,7 @@ function* watchFetchGlobalNewsList(): any {
           return put({
             type: actionTypes.GLOBAL_FETCH_newsList_SUCCESSED,
             origin: originKeys[index],
-            data: item.data.data,
+            data: item.data,
           });
         });
       }
@@ -105,11 +105,11 @@ function* watchSetLayouts(): any {
 }
 
 const globalSaga = [
-  watchFetchUserInfo,
-  watchFetchGlobalOrigin,
-  watchFetchGlobalUserSetting,
-  watchFetchGlobalNewsList,
-  watchSetLayouts,
+  watchFetchUserInfo(),
+  watchFetchGlobalOrigin(),
+  watchFetchGlobalUserSetting(),
+  watchFetchGlobalNewsList(),
+  watchSetLayouts(),
 ];
 
 export default globalSaga;

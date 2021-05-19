@@ -9,6 +9,6 @@ function* watchFetchMonitor() {
   }
 }
 
-const monitorSaga = [watchFetchMonitor];
+const monitorSaga = [watchFetchMonitor()];
 
 export default monitorSaga;

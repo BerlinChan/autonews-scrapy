@@ -20,7 +20,7 @@ function* watchFetchPastInquiry(): any {
     if (pastInquiry) {
       yield put({
         type: actionTypes.PastInquiry_FETCH_SUCCESSED,
-        payload: pastInquiry.data.data,
+        payload: pastInquiry.data,
       });
     } else {
       let errBody = yield pastInquiry;
@@ -46,7 +46,7 @@ function* watchFetchDetailById(): any {
     if (newsDetail) {
       yield put({
         type: actionTypes.PastInquiry_FETCH_detail_SUCCESSED,
-        data: newsDetail.data.data,
+        data: newsDetail.data,
       });
     } else {
       let errBody = yield newsDetail;
@@ -58,6 +58,6 @@ function* watchFetchDetailById(): any {
   }
 }
 
-const pastInquirySaga = [watchFetchPastInquiry, watchFetchDetailById];
+const pastInquirySaga = [watchFetchPastInquiry(), watchFetchDetailById()];
 
 export default pastInquirySaga;

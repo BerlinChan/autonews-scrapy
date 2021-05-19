@@ -1,6 +1,5 @@
 import { AnyAction, Reducer } from "redux";
 import actionTypes from "../types/actionTypes";
-// import { updateObject } from '../../utils/utility';
 
 const initialState = {
   fakeDataList: [],
@@ -99,7 +98,7 @@ const rootReducer: Reducer<any> = (
     case actionTypes.GLOBAL_FETCH_origin_SUCCESSED:
       return {
         ...state,
-        origin: action.payload.origin,
+        origin: action.payload,
       };
     case actionTypes.GLOBAL_FETCH_newsList_SUCCESSED:
       return {

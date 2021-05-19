@@ -19,7 +19,7 @@ const PastInquiry = () => {
     pastInquiryResult,
     form: formData,
     detail,
-  } = pastInquiry.pastInquiryResult;
+  } = pastInquiry;
   const columns = [
     {
       title: "日期",

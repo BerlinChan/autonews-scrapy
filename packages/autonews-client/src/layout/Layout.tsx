@@ -1,5 +1,5 @@
 import { RouteConfig } from "src/shared/models/routeModels";
-import { ReactElement, useEffect } from "react";
+import { useEffect } from "react";
 import { Layout, Menu } from "antd";
 import cls from "./Layout.module.scss";
 import { Link, useLocation } from "react-router-dom";
@@ -9,13 +9,13 @@ import { useDispatch } from "react-redux";
 
 const { Header, Content, Footer } = Layout;
 
-const LayoutComponent = ({ children }: RouteConfig): ReactElement => {
+const LayoutComponent = ({ children }: RouteConfig) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchGlobalOrigin);
-  });
+    dispatch(fetchGlobalOrigin());
+  }, [dispatch]);
 
   return (
     <Layout>
