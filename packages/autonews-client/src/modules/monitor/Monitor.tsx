@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import cls from "./Monitor.module.scss";
 import "react-resizable/css/styles.css";
 import { Responsive, WidthProvider } from "react-grid-layout";
-import { setLayouts, setFilteredList } from "src/store/actions/rootAction";
+import { setLayouts, setFilteredList } from "src/store/actions/globalAction";
 import MonitorCard from "./MonitorCard/MonitorCard";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -16,7 +16,7 @@ type Props = {
 const MonitorComponent = ({ monitor, global, newsList }: Props) => {
   // const gridLayoutConfig = global.gridLayoutConfig;
   const dispatch = useDispatch();
-  const store = useSelector((state: any) => state.homeData);
+  const store = useSelector((state: any) => state.root);
   console.log("🚀 ~ file: Monitor.tsx ~ line 26 ~ store", store);
 
   return (

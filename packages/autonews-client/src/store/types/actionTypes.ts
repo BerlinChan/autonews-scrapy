@@ -18,6 +18,20 @@ const ACTION_TYPES = {
   GLOBAL_SET_layouts: "GLOBAL_SET_layouts",
   GLOBAL_SET_filteredList: "GLOBAL_SET_filteredList",
   GLOBAL_SET_showSentimentInspector: "GLOBAL_SET_showSentimentInspector",
+
+  Monitor_FETCH_REQUESTED : 'Monitor_FETCH_REQUESTED',
+  Monitor_FETCH_SUCCESSED : 'Monitor_FETCH_SUCCESSED',
+  Monitor_FETCH_FAILURE : 'Monitor_FETCH_FAILURE',
+  Monitor_ON_destroy : 'Monitor_ON_destroy',
+
+  PastInquiry_FETCH_REQUESTED : 'PastInquiry_FETCH_REQUESTED',
+  PastInquiry_FETCH_SUCCESSED : 'PastInquiry_FETCH_SUCCESSED',
+  PastInquiry_FETCH_FAILURE : 'PastInquiry_FETCH_FAILURE',
+  PastInquiry_ON_destroy : 'PastInquiry_ON_destroy',
+  PastInquiry_SET_formValue : 'PastInquiry_SET_formValue',
+  PastInquiry_SET_isDetailModalShow : 'PastInquiry_SET_isDetailModalShow',
+  PastInquiry_FETCH_detail_REQUESTED : 'PastInquiry_FETCH_detail_REQUESTED',
+  PastInquiry_FETCH_detail_SUCCESSED : 'PastInquiry_FETCH_detail_SUCCESSED',
 };
 
 export default ACTION_TYPES;

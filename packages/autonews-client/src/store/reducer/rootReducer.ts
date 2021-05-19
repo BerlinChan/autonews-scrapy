@@ -113,12 +113,12 @@ const rootReducer: Reducer<any> = (
         },
       };
     case actionTypes.GLOBAL_SET_layouts:
-      if (action.payload.layouts.md.length) {
+      if (action.payload.md.length) {
         return {
           ...state,
           userSetting: {
             ...state.userSetting,
-            layouts: action.payload.layouts,
+            layouts: action.payload,
           },
         };
       } else {

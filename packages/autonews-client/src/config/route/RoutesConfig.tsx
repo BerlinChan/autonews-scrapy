@@ -11,7 +11,7 @@ const RoutesConfig: RouteType = {
     {
       path: '/pastInquiry',
       isPublic: true,
-      component: lazy((): any => import('src/modules/demo/Demo')),
+      component: lazy((): any => import('src/modules/pastInquiry/PastInquiry')),
     },
     {
       path: '/filter',
