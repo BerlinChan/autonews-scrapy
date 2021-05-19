@@ -11,11 +11,15 @@ import {
 } from "../../store/actions/pastInquiryAction";
 
 const PastInquiry = () => {
-  const global = useSelector((state: any) => state.root);
-  const pastInquiry = useSelector((state: any) => state.pastInquiryReducer);
-  const pastInquiryResult = pastInquiry.pastInquiryResult;
-  const formData = pastInquiry.form;
-  const detail = pastInquiry.detail;
+  const { global, pastInquiry } = useSelector((state: any) => ({
+    global: state.root,
+    pastInquiry: state.pastInquiryReducer,
+  }));
+  const {
+    pastInquiryResult,
+    form: formData,
+    detail,
+  } = pastInquiry.pastInquiryResult;
   const columns = [
     {
       title: "日期",

@@ -25,7 +25,7 @@ export function* rootSaga(): Generator {
   yield all([
     ...globalSaga,
     ...monitorSaga,
-    pastInquirySaga,
+    ...pastInquirySaga,
     fork(apiCallSaga),
   ]);
 }

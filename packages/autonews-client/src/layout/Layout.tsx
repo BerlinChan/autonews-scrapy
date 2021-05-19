@@ -1,14 +1,21 @@
 import { RouteConfig } from "src/shared/models/routeModels";
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { Layout, Menu } from "antd";
 import cls from "./Layout.module.scss";
 import { Link, useLocation } from "react-router-dom";
 import logo from "./autonews-logo.png";
+import { fetchGlobalOrigin } from "../store/actions/globalAction";
+import { useDispatch } from "react-redux";
 
 const { Header, Content, Footer } = Layout;
 
 const LayoutComponent = ({ children }: RouteConfig): ReactElement => {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchGlobalOrigin);
+  });
 
   return (
     <Layout>
