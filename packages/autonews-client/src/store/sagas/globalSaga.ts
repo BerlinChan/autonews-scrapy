@@ -1,4 +1,4 @@
-import { take, put } from "redux-saga/effects";
+import { take, put, select } from "redux-saga/effects";
 import { API_SERVER } from "src/shared/constants/urls";
 import { fetchPostApiDataExample } from "../actions/rootAction";
 import FetchSendRequest from "src/shared/services/fetchSendRequestService";
@@ -32,41 +32,78 @@ function* watchFetchGlobalOrigin(): any {
       });
       yield put({
         type: actionTypes.GLOBAL_FETCH_userSetting_REQUESTED,
-        payload: originList.data,
+        payload: { origin: originList.data },
       });
     }
   }
 }
 function* watchFetchGlobalUserSetting(): any {
   while (true) {
-    const { origin, selectedOriginKeys, showSentimentInspector } = yield take(
-      actionTypes.GLOBAL_FETCH_userSetting_REQUESTED
-    );
-    console.log(
-      "🚀 ~ file: apiCallSaga.ts ~ line 44 ~ function*watchFetchGlobalUserSetting ~ origin, selectedOriginKeys, showSentimentInspector",
-      origin,
-      selectedOriginKeys,
-      showSentimentInspector
-    );
+    const {
+      payload: { origin, selectedOriginKeys, showSentimentInspector },
+    } = yield take(actionTypes.GLOBAL_FETCH_userSetting_REQUESTED);
 
     // get user setting
     let userSetting = {
       originKeys: JSON.parse(
-        localStorage.getItem("userSetting.originKeys") || "{}"
+        localStorage.getItem("userSetting.originKeys") || "[]"
       ),
       layouts: JSON.parse(localStorage.getItem("userSetting.layouts") || "{}"),
       showSentimentInspector: JSON.parse(
         localStorage.getItem("userSetting.showSentimentInspector") || "{}"
       ),
     };
+    if (!userSetting.originKeys.length) {
+      // no localStorage data, save default to it
+      const { root } = yield select();
+      const { gridCols, monitorWidth, monitorHeight } = root.gridLayoutConfig;
+      userSetting = {
+        originKeys: selectedOriginKeys
+          ? selectedOriginKeys
+          : origin.slice(0, 8).map((item: any) => item.key),
+        layouts: { lg: [], md: [], sm: [], xs: [] },
+        showSentimentInspector: showSentimentInspector,
+      };
+      for (let i in userSetting.layouts) {
+        let currentX = 0;
+        let currentY = 0;
+        for (let j = 0; j < userSetting.originKeys.length; j++) {
+          let colsPerRow = gridCols[i] / monitorWidth[i];
+          userSetting.layouts[i].push({
+            i: userSetting.originKeys[j],
+            x: currentX * monitorWidth[i],
+            y: currentY * monitorHeight[i],
+            w: monitorWidth[i],
+            h: monitorHeight[i],
+            minW: monitorWidth[i],
+            minH: 2,
+          });
+          if (currentX >= colsPerRow - 1) {
+            currentX = 0;
+            currentY += 1;
+          } else {
+            currentX += 1;
+          }
+        }
+      }
+      localStorage.setItem(
+        "userSetting.originKeys",
+        JSON.stringify(userSetting.originKeys)
+      );
+      localStorage.setItem(
+        "userSetting.layouts",
+        JSON.stringify(userSetting.layouts)
+      );
+      localStorage.setItem("userSetting.showSentimentInspector", "true");
+    }
 
     yield put({
       type: actionTypes.GLOBAL_FETCH_userSetting_SUCCESSED,
-      userSetting,
+      payload: userSetting,
     });
     yield put({
       type: actionTypes.GLOBAL_FETCH_newsList_REQUESTED,
-      originKeys: userSetting.originKeys,
+      payload: userSetting.originKeys,
     });
   }
 }
@@ -87,8 +124,7 @@ function* watchFetchGlobalNewsList(): any {
         yield listResults.map((item: any, index: number) => {
           return put({
             type: actionTypes.GLOBAL_FETCH_newsList_SUCCESSED,
-            origin: originKeys[index],
-            data: item.data,
+            payload: { origin: originKeys[index], data: item.data },
           });
         });
       }
@@ -97,7 +133,7 @@ function* watchFetchGlobalNewsList(): any {
 }
 function* watchSetLayouts(): any {
   while (true) {
-    const { layouts } = yield take(actionTypes.GLOBAL_SET_layouts);
+    const { payload: layouts } = yield take(actionTypes.GLOBAL_SET_layouts);
 
     if (layouts.md.length)
       localStorage.setItem("userSetting.layouts", JSON.stringify(layouts));

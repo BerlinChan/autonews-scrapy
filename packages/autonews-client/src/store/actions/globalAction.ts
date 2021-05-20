@@ -8,8 +8,8 @@ export const fetchGlobalOrigin = (): Action<any> => {
   return { type: actionTypes.GLOBAL_FETCH_origin_REQUESTED };
 };
 export const fetchGlobalUserSetting = (
-  origin: any,
-  selectedOriginKeys: any,
+  origin: any[],
+  selectedOriginKeys: any[],
   showSentimentInspector: boolean = true
 ): Action<any> => {
   return {

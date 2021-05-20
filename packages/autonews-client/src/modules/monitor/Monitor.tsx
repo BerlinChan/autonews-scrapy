@@ -3,21 +3,21 @@ import cls from "./Monitor.module.scss";
 import "react-resizable/css/styles.css";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import { setLayouts, setFilteredList } from "src/store/actions/globalAction";
+import { fetchMonitor } from "src/store/actions/monitorAction";
 import MonitorCard from "./MonitorCard/MonitorCard";
+import { useEffect } from "react";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-type Props = {
-  monitor: any;
-  global: any;
-  newsList: object;
-};
+type Props = {};
 
-const MonitorComponent = ({ monitor, global, newsList }: Props) => {
-  // const gridLayoutConfig = global.gridLayoutConfig;
+const MonitorComponent = (props: Props) => {
   const dispatch = useDispatch();
   const store = useSelector((state: any) => state.root);
-  console.log("🚀 ~ file: Monitor.tsx ~ line 26 ~ store", store);
+
+  useEffect(() => {
+    dispatch(fetchMonitor());
+  }, [dispatch]);
 
   return (
     <div className={cls.monitor}>

@@ -78,8 +78,8 @@ const rootReducer: Reducer<any> = (
     case actionTypes.GLOBAL_FETCH_userSetting_SUCCESSED:
       const origin = state.origin;
       let tempNewsList = {};
-      action.userSetting.originKeys.length &&
-        action.userSetting.originKeys.forEach((item: any, index: number) => {
+      action.payload.originKeys.length &&
+        action.payload.originKeys.forEach((item: any, index: number) => {
           const currentOriginItem = origin.find(
             (originItem: any) => originItem.key === item
           );
@@ -92,7 +92,7 @@ const rootReducer: Reducer<any> = (
 
       return {
         ...state,
-        userSetting: action.payload.userSetting,
+        userSetting: action.payload,
         newsList: tempNewsList,
       };
     case actionTypes.GLOBAL_FETCH_origin_SUCCESSED:
@@ -148,7 +148,6 @@ const rootReducer: Reducer<any> = (
         ...state,
         fakeDataList: action.payload,
       };
-    // case actionTypes.POST_API_DATA: return updateObject(state, action);
     case actionTypes.POST_API_DATA:
       return {
         ...state,
